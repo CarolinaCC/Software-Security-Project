@@ -1,7 +1,4 @@
-#!/bin/python3
-
 import json
-import sys
 
 class Vulnerability:
     def __init__(self, sources: set, sanitizers: set, sinks: set):
@@ -15,7 +12,7 @@ class Vulnerability:
         self.sinks = self.sinks.union(sinks)
 
     def __str__(self):
-        return f'\n\tsources: {str(self.sources)},\n\tsanitizers: {str(self.sanitizers)},\n\tsinks: {str(self.sinks)}\n \n'
+        return f'\n\tsources: {str(self.sources)},\n\tsanitizers: {str(self.sanitizers)},\n\tsinks: {str(self.sinks)}\n\n'
 
     def __repr__(self):
         return self.__str__()
@@ -34,6 +31,3 @@ def parse(file_path: str) -> dict:
         else:
             vulnerabilities[vulnerability].add(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
     return vulnerabilities
-
-if __name__ == '__main__':
-    print(parse(sys.argv[1]))
