@@ -17,11 +17,10 @@ class Vulnerability:
             self.sinks.add(sink)
 
     def __str__(self):
-        return str(self.sources) + "\n" + str(self.sanitizers) + "\n" + str(self.sinks)
-
+        return f'sources: {str(self.sources)}, sanitizers: {str(self.sanitizers)}, sinks: {str(self.sinks)}'
 
     def __repr__(self):
-        return str(self.sources) + "\n" + str(self.sanitizers) + "\n" + str(self.sinks)
+        return f'sources: {str(self.sources)}, sanitizers: {str(self.sanitizers)}, sinks: {str(self.sinks)}'
 
 def parse(file_path: str) -> dict:
     # Loads json from file to variable
