@@ -1,4 +1,4 @@
-## About
+# About
 
 This project aims at building a static analysis tool for detecting common vulnerabilities in web applications, mainly SQL Injection, XSS Injection, Command Injection and Path Traversal.
 
@@ -10,6 +10,8 @@ A complementary report of the tool developed is avaliable in the report folder
 
 Example inputs are given in the examples folder
 
+## Group 3
+
 ### Group members
 
 Carolina Carreira
@@ -17,5 +19,3 @@ Carolina Carreira
 Miguel Barros
 
 Rafael Branco
-
-
