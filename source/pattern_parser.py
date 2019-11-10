@@ -2,26 +2,35 @@
 
 import json
 
+class Vulnerability:
+    def __init__(self, sources: list, sanitizers: list, sinks: list):
+        self.sources = set(sources)
+        self.sanitizers = set(sanitizers)
+        self.sinks = set(sinks)
+
+    def add(self, sources: list, sanitizers: list, sinks: list):
+        for source in sources:
+            self.sources.add(source)
+        for sanitizer in sanitizers:
+            self.sanitizers.add(sanitizer)
+        for sink in sinks:
+            self.sinks.add(sink)
+
 def parse(file_path: str) -> dict:
     # Loads json from file to variable
     with open(file_path, 'r') as f:
         patterns = json.load(f)
+        
+    vulnerabilities = dict()
+    for pattern in patterns:
+        if not pattern['vulnerability'] in vulnerabilities:
+            vulnerabilities[pattern['vulnerability']] = Vulnerability(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
+        else:
+            vulnerabilities[pattern['vulnerability']].add(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
 
-    # Looks for repeated vulnerabilities and joins them into one
-    to_remove = set()
-    for number, pattern in enumerate(patterns):
-        for i in range(number+1, len(patterns)):
-            if patterns[i]['vulnerability'] == pattern['vulnerability']:
-                to_remove.add(number)
-                patterns[i]['sources'].append(pattern['sources'])
-                patterns[i]['sanitizers'].append(pattern['sanitizers'])
-                patterns[i]['sinks'].append(pattern['sinks'])
-    for i in to_remove:
-        del patterns[i]
-
-    print(patterns)
+    return vulnerabilities
 
 if __name__ == '__main__':
     import sys
-    parse(sys.argv[1])
+    print(parse(sys.argv[1]))
 
