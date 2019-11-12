@@ -1,33 +1,40 @@
+#!/bin/python3
+
 import json
 
 class Vulnerability:
-    def __init__(self, sources: set, sanitizers: set, sinks: set):
+    def __init__(self, sources: list, sanitizers: list, sinks: list):
         self.sources = set(sources)
         self.sanitizers = set(sanitizers)
         self.sinks = set(sinks)
 
-    def add(self, sources: set, sanitizers: set, sinks: set):
-        self.sources = self.sources.union(sources)
-        self.sanitizers = self.sanitizers.union(sanitizers)
-        self.sinks = self.sinks.union(sinks)
+    def add(self, sources: list, sanitizers: list, sinks: list):
+        for source in sources:
+            self.sources.add(source)
+        for sanitizer in sanitizers:
+            self.sanitizers.add(sanitizer)
+        for sink in sinks:
+            self.sinks.add(sink)
 
     def __str__(self):
-        return f'\n\tsources: {str(self.sources)},\n\tsanitizers: {str(self.sanitizers)},\n\tsinks: {str(self.sinks)}\n\n'
+        return f'sources: {str(self.sources)}, sanitizers: {str(self.sanitizers)}, sinks: {str(self.sinks)}'
 
     def __repr__(self):
-        return self.__str__()
+        return f'sources: {str(self.sources)}, sanitizers: {str(self.sanitizers)}, sinks: {str(self.sinks)}'
 
 def parse(file_path: str) -> dict:
-    #load json
+    # Loads json from file to variable
     with open(file_path, 'r') as f:
         patterns = json.load(f)
 
     vulnerabilities = dict()
-
     for pattern in patterns:
-        vulnerability = pattern['vulnerability']
-        if not vulnerability in vulnerabilities:
-            vulnerabilities[vulnerability] = Vulnerability(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
+        if not pattern['vulnerability'] in vulnerabilities:
+            vulnerabilities[pattern['vulnerability']] = Vulnerability(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
         else:
-            vulnerabilities[vulnerability].add(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
+            vulnerabilities[pattern['vulnerability']].add(pattern['sources'], pattern['sanitizers'], pattern['sinks'])
     return vulnerabilities
+
+if __name__ == '__main__':
+    import sys
+    print(parse(sys.argv[1]))
