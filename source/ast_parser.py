@@ -12,6 +12,7 @@ class Statement:
         pass
 
 
+
 class Expression(Statement):
     '''
         In Python every Expression can be a Statement
@@ -21,6 +22,7 @@ class Expression(Statement):
     @staticmethod
     def parse_from_node(node: dict):
         pass
+
 
 
 class Identifier(Expression):
@@ -39,6 +41,7 @@ class Identifier(Expression):
         return Identifier(name)
 
 
+
 class Literal(Expression):
     '''
         A literal is a constant value (like 3 or "Hello world")
@@ -52,14 +55,15 @@ class Literal(Expression):
 
     @staticmethod
     def parse_from_node(node: dict):
-        ast_type = node['value']['ast_type']
+        ast_type = node['ast_type']
         if ast_type == "Str":
-            return Literal(node['value']['s'])
+            return Literal(node['s'])
         elif ast_type == "Num":
-            return Literal(node['value']['n']['n'])
+            return Literal(node['n']['n'])
         else:
             #should never happen
             return None
+
 
 
 class AssignExpression(Statement):
@@ -72,9 +76,10 @@ class AssignExpression(Statement):
 
     @staticmethod
     def parse_from_node(node: dict):
-        left_val = parse_node(node['targets'][0])
-        right_val = parse_node(node['value'])
+        left_val = parse_node_expr(node['targets'][0])
+        right_val = parse_node_expr(node['value'])
         return AssignExpression(left_val, right_val)
+
 
 
 class DoubleExpression(Expression):
@@ -91,6 +96,7 @@ class DoubleExpression(Expression):
         pass
 
 
+
 class UnaryExpression(Expression):
     '''
         UnaryExpression := not Expression
@@ -102,6 +108,7 @@ class UnaryExpression(Expression):
     @staticmethod
     def parse_from_node(node: dict):
         pass
+
 
 
 class FunctionCall(Expression):
@@ -118,6 +125,7 @@ class FunctionCall(Expression):
         pass
 
 
+
 class IfExpression(Statement):
     def __init__(self, cond: Expression, body: list, else_body: list):
         #body, else_body list of statements
@@ -130,6 +138,7 @@ class IfExpression(Statement):
         pass
 
 
+
 class WhileExpression(Statement):
     def __init__(self, cond: Expression, body: list): #body: list of statements
         self.cond = cond
@@ -140,23 +149,33 @@ class WhileExpression(Statement):
         pass
 
 
-def parse_node(node):
+def parse_node_expr(node):
+    if node['ast_type'] == 'Name':
+        return Identifier.parse_from_node(node)
+    if node['ast_type'] in ('Str', 'Num'):
+        return Literal.parse_from_node(node)
+    return None
+
+def parse_node_stmt(node):
     if node['ast_type'] == "Assign":
         return AssignExpression.parse_from_node(node)
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
+    #A statement that is just an expression
     if node['ast_type'] == 'Expr':
-        if node['value']['ast_type'] in ("Str", "Num"):
-            return Literal.parse_from_node(node)
+        return parse_node_expr(node["value"])
+    return None
+
 
 def parse(file_path):
     prog = list()
     with open(file_path, 'r') as f:
         tree = json.load(f)
     for node in tree['body']:
-        stmt = parse_node(node)
+        stmt = parse_node_stmt(node)
         print(stmt)
         prog.append(stmt)
+
 
 
 if __name__ == "__main__":
