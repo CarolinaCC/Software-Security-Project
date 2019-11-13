@@ -16,7 +16,7 @@ class Expression(Statement):
     '''
         In Python every Expression can be a Statement
         Expression := Literal | Identifier | Expression Operator Expression | not Expression | Function(Args)
-        Operator := + | - | / | * | % | or | and (? what else)
+        Operator := + | - | / | * | % | or | ** | // | == | and (? what else)
     '''
     @staticmethod
     def parse_from_node(node: dict):
@@ -48,7 +48,7 @@ class Literal(Expression):
         pass
 
 
-class AssignmentExpression(Statement):
+class AssignExpression(Statement):
     def __init__(self, left_val: Identifier, right_val: Expression):
         self.left_val = left_val
         self.right_val = right_val
@@ -60,7 +60,7 @@ class AssignmentExpression(Statement):
     def parse_from_node(node: dict):
         left_val = parse_node(node['targets'][0])
         right_val = parse_node(node['value'])
-        return AssignmentExpression(left_val, right_val)
+        return AssignExpression(left_val, right_val)
 
 
 class DoubleExpression(Expression):
@@ -125,7 +125,7 @@ class WhileExpression(Statement):
 
 def parse_node(node):
     if node['ast_type'] == "Assign":
-        return AssignmentExpression.parse_from_node(node)
+        return AssignExpression.parse_from_node(node)
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
 
