@@ -76,8 +76,8 @@ class AssignExpression(Statement):
 
     @staticmethod
     def parse_from_node(node: dict):
-        left_val = parse_node_expr(node['targets'][0])
-        right_val = parse_node_expr(node['value'])
+        left_val = parse_node_expr_value(node['targets'][0])
+        right_val = parse_node_expr_value(node['value'])
         return AssignExpression(left_val, right_val)
 
 
@@ -149,21 +149,21 @@ class WhileExpression(Statement):
         pass
 
 
-def parse_node_expr(node):
+def parse_node_expr_value(node):
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
     if node['ast_type'] in ('Str', 'Num'):
         return Literal.parse_from_node(node)
     return None
 
-def parse_node_stmt(node):
+def parse_node(node):
     if node['ast_type'] == "Assign":
         return AssignExpression.parse_from_node(node)
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
     #A statement that is just an expression
     if node['ast_type'] == 'Expr':
-        return parse_node_expr(node["value"])
+        return parse_node_expr_value(node["value"])
     return None
 
 
@@ -172,7 +172,7 @@ def parse(file_path):
     with open(file_path, 'r') as f:
         tree = json.load(f)
     for node in tree['body']:
-        stmt = parse_node_stmt(node)
+        stmt = parse_node(node)
         print(stmt)
         prog.append(stmt)
 
