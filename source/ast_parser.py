@@ -24,6 +24,9 @@ class Expression(Statement):
 
 
 class Identifier(Expression):
+    '''
+        An Identifier is a program variable id
+    '''
     def __init__(self, name: str):
         self.name = name
 
@@ -37,6 +40,10 @@ class Identifier(Expression):
 
 
 class Literal(Expression):
+    '''
+        A literal is a constant value (like 3 or "Hello world")
+        Literal := Num | Str
+    '''
     def __init__(self, val):
         self.val = val
 
@@ -45,7 +52,14 @@ class Literal(Expression):
 
     @staticmethod
     def parse_from_node(node: dict):
-        pass
+        ast_type = node['value']['ast_type']
+        if ast_type == "Str":
+            return Literal(node['value']['s'])
+        elif ast_type == "Num":
+            return Literal(node['value']['n']['n'])
+        else:
+            #should never happen
+            return None
 
 
 class AssignExpression(Statement):
@@ -64,6 +78,9 @@ class AssignExpression(Statement):
 
 
 class DoubleExpression(Expression):
+    '''
+        A DoubleExpression is an operation of two or more expressions
+    '''
     def __init__(self, left_val: Expression, right_val: Expression, operator: str):
         self.left_val = left_val
         self.right_val = right_val
@@ -128,6 +145,9 @@ def parse_node(node):
         return AssignExpression.parse_from_node(node)
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
+    if node['ast_type'] == 'Expr':
+        if node['value']['ast_type'] in ("Str", "Num"):
+            return Literal.parse_from_node(node)
 
 def parse(file_path):
     prog = list()
