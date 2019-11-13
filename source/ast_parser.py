@@ -131,7 +131,7 @@ class IfExpression(Statement):
         #body, else_body list of statements
         self.cond = cond
         self.body = body
-        self.else_body = else_body #if no else else_body should be None
+        self.else_body = else_body #if no else else_body should be Empty List
 
     @staticmethod
     def parse_from_node(node: dict):
