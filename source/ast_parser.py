@@ -5,7 +5,7 @@ import sys
 
 class Statement:
     '''
-        Statement := Expression | If | If Else | While
+        Statement := Expression | If | If Else | While | Identifier = Expression
     '''
     @staticmethod
     def parse_from_node(node: dict):
@@ -149,6 +149,7 @@ class WhileExpression(Statement):
         pass
 
 
+
 def parse_node_expr_value(node):
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
@@ -157,10 +158,9 @@ def parse_node_expr_value(node):
     return None
 
 def parse_node(node):
+    #stmt -> Assign, Expr, if, while
     if node['ast_type'] == "Assign":
         return AssignExpression.parse_from_node(node)
-    if node['ast_type'] == 'Name':
-        return Identifier.parse_from_node(node)
     #A statement that is just an expression
     if node['ast_type'] == 'Expr':
         return parse_node_expr_value(node["value"])
