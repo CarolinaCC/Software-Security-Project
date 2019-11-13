@@ -27,14 +27,21 @@ class Identifier(Expression):
     def __init__(self, name: str):
         self.name = name
 
+    def __repr__(self):
+        return f"{self.name}"
+
     @staticmethod
     def parse_from_node(node: dict):
-        pass
+        name = node['id']
+        return Identifier(name)
 
 
 class Literal(Expression):
     def __init__(self, val):
         self.val = val
+
+    def __repr__(self):
+        return f"{self.val}"
 
     @staticmethod
     def parse_from_node(node: dict):
@@ -46,9 +53,14 @@ class AssignmentExpression(Statement):
         self.left_val = left_val
         self.right_val = right_val
 
+    def __repr__(self):
+        return f"{self.left_val} := {self.right_val}"
+
     @staticmethod
     def parse_from_node(node: dict):
-        print('Found AssignmentExpression')
+        left_val = parse_node(node['targets'][0])
+        right_val = parse_node(node['value'])
+        return AssignmentExpression(left_val, right_val)
 
 
 class DoubleExpression(Expression):
@@ -112,15 +124,19 @@ class WhileExpression(Statement):
 
 
 def parse_node(node):
-    if(node['ast_type'] == "Assign"):
+    if node['ast_type'] == "Assign":
         return AssignmentExpression.parse_from_node(node)
+    if node['ast_type'] == 'Name':
+        return Identifier.parse_from_node(node)
 
 def parse(file_path):
     prog = list()
     with open(file_path, 'r') as f:
         tree = json.load(f)
     for node in tree['body']:
-        prog.append(parse_node(node))
+        stmt = parse_node(node)
+        print(stmt)
+        prog.append(stmt)
 
 
 if __name__ == "__main__":
