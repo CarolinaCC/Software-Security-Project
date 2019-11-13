@@ -1,12 +1,10 @@
-
-import ast
 import json
 import sys
+import operator
+import pattern_parser
+import ast_parser
+
 
 if __name__ == "__main__":
-    with open(sys.argv[1], 'r') as f:
-        tree = json.loads(f.read())
-    body = tree['body']
-    for stmt in body:
-        print(stmt)
-        print("\n\n")
+    patterns = pattern_parser.parse(sys.argv[1])
+    #prog = ast_parser.parse(sys.argv[2])
