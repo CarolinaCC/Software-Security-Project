@@ -56,13 +56,14 @@ class Literal(Expression):
     @staticmethod
     def parse_from_node(node: dict):
         ast_type = node['ast_type']
-        if ast_type == "Str":
+        if ast_type == 'Str':
             return Literal(node['s'])
-        elif ast_type == "Num":
+        if ast_type == 'Num':
             return Literal(node['n']['n'])
-        else:
-            #should never happen
-            return None
+        if ast_type == 'NameConstant':
+            return Literal(node["value"])
+        #should never happen
+        return None
 
 
 
@@ -153,7 +154,7 @@ class WhileExpression(Statement):
 def parse_node_expr_value(node):
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
-    if node['ast_type'] in ('Str', 'Num'):
+    if node['ast_type'] in ('Str', 'Num', 'NameConstant'):
         return Literal.parse_from_node(node)
     return None
 

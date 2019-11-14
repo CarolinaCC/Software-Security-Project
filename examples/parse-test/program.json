@@ -6,10 +6,10 @@
             "col_offset": 0,
             "lineno": 1,
             "value": {
-                "ast_type": "Str",
+                "ast_type": "NameConstant",
                 "col_offset": 0,
                 "lineno": 1,
-                "s": "ola"
+                "value": "True"
             }
         },
         {
@@ -17,14 +17,10 @@
             "col_offset": 0,
             "lineno": 2,
             "value": {
-                "ast_type": "Num",
+                "ast_type": "Str",
                 "col_offset": 0,
                 "lineno": 2,
-                "n": {
-                    "ast_type": "int",
-                    "n": 3,
-                    "n_str": "3"
-                }
+                "s": "ola"
             }
         },
         {
@@ -37,8 +33,8 @@
                 "lineno": 3,
                 "n": {
                     "ast_type": "int",
-                    "n": 5,
-                    "n_str": "5"
+                    "n": 3,
+                    "n_str": "3"
                 }
             }
         },
@@ -47,26 +43,41 @@
             "col_offset": 0,
             "lineno": 4,
             "value": {
+                "ast_type": "Num",
+                "col_offset": 0,
+                "lineno": 4,
+                "n": {
+                    "ast_type": "int",
+                    "n": 5,
+                    "n_str": "5"
+                }
+            }
+        },
+        {
+            "ast_type": "Expr",
+            "col_offset": 0,
+            "lineno": 5,
+            "value": {
                 "ast_type": "BinOp",
                 "col_offset": 0,
                 "left": {
                     "ast_type": "Num",
                     "col_offset": 0,
-                    "lineno": 4,
+                    "lineno": 5,
                     "n": {
                         "ast_type": "int",
                         "n": 4,
                         "n_str": "4"
                     }
                 },
-                "lineno": 4,
+                "lineno": 5,
                 "op": {
                     "ast_type": "Add"
                 },
                 "right": {
                     "ast_type": "Num",
                     "col_offset": 4,
-                    "lineno": 4,
+                    "lineno": 5,
                     "n": {
                         "ast_type": "int",
                         "n": 7,
@@ -78,7 +89,7 @@
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 5,
+            "lineno": 6,
             "value": {
                 "ast_type": "BinOp",
                 "col_offset": 6,
@@ -88,21 +99,21 @@
                     "left": {
                         "ast_type": "Num",
                         "col_offset": 0,
-                        "lineno": 5,
+                        "lineno": 6,
                         "n": {
                             "ast_type": "int",
                             "n": 4,
                             "n_str": "4"
                         }
                     },
-                    "lineno": 5,
+                    "lineno": 6,
                     "op": {
                         "ast_type": "Add"
                     },
                     "right": {
                         "ast_type": "Num",
                         "col_offset": 4,
-                        "lineno": 5,
+                        "lineno": 6,
                         "n": {
                             "ast_type": "int",
                             "n": 7,
@@ -110,45 +121,19 @@
                         }
                     }
                 },
-                "lineno": 5,
+                "lineno": 6,
                 "op": {
                     "ast_type": "Add"
                 },
                 "right": {
                     "ast_type": "Num",
                     "col_offset": 8,
-                    "lineno": 5,
+                    "lineno": 6,
                     "n": {
                         "ast_type": "int",
                         "n": 12,
                         "n_str": "12"
                     }
-                }
-            }
-        },
-        {
-            "ast_type": "Assign",
-            "col_offset": 0,
-            "lineno": 6,
-            "targets": [
-                {
-                    "ast_type": "Name",
-                    "col_offset": 0,
-                    "ctx": {
-                        "ast_type": "Store"
-                    },
-                    "id": "a",
-                    "lineno": 6
-                }
-            ],
-            "value": {
-                "ast_type": "Num",
-                "col_offset": 4,
-                "lineno": 6,
-                "n": {
-                    "ast_type": "int",
-                    "n": 0,
-                    "n_str": "0"
                 }
             }
         },
@@ -163,7 +148,7 @@
                     "ctx": {
                         "ast_type": "Store"
                     },
-                    "id": "b",
+                    "id": "a",
                     "lineno": 7
                 }
             ],
@@ -173,8 +158,8 @@
                 "lineno": 7,
                 "n": {
                     "ast_type": "int",
-                    "n": 1,
-                    "n_str": "1"
+                    "n": 0,
+                    "n_str": "0"
                 }
             }
         },
@@ -189,7 +174,7 @@
                     "ctx": {
                         "ast_type": "Store"
                     },
-                    "id": "c",
+                    "id": "b",
                     "lineno": 8
                 }
             ],
@@ -197,6 +182,32 @@
                 "ast_type": "Num",
                 "col_offset": 4,
                 "lineno": 8,
+                "n": {
+                    "ast_type": "int",
+                    "n": 1,
+                    "n_str": "1"
+                }
+            }
+        },
+        {
+            "ast_type": "Assign",
+            "col_offset": 0,
+            "lineno": 9,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "c",
+                    "lineno": 9
+                }
+            ],
+            "value": {
+                "ast_type": "Num",
+                "col_offset": 4,
+                "lineno": 9,
                 "n": {
                     "ast_type": "int",
                     "n": 3,
@@ -207,7 +218,7 @@
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 9,
+            "lineno": 10,
             "value": {
                 "ast_type": "Name",
                 "col_offset": 0,
@@ -215,13 +226,13 @@
                     "ast_type": "Load"
                 },
                 "id": "c",
-                "lineno": 9
+                "lineno": 10
             }
         },
         {
             "ast_type": "Assign",
             "col_offset": 0,
-            "lineno": 10,
+            "lineno": 11,
             "targets": [
                 {
                     "ast_type": "Name",
@@ -230,7 +241,7 @@
                         "ast_type": "Store"
                     },
                     "id": "c",
-                    "lineno": 10
+                    "lineno": 11
                 }
             ],
             "value": {
@@ -242,21 +253,21 @@
                     "left": {
                         "ast_type": "Num",
                         "col_offset": 4,
-                        "lineno": 10,
+                        "lineno": 11,
                         "n": {
                             "ast_type": "int",
                             "n": 3,
                             "n_str": "3"
                         }
                     },
-                    "lineno": 10,
+                    "lineno": 11,
                     "op": {
                         "ast_type": "Add"
                     },
                     "right": {
                         "ast_type": "Num",
                         "col_offset": 8,
-                        "lineno": 10,
+                        "lineno": 11,
                         "n": {
                             "ast_type": "int",
                             "n": 4,
@@ -264,14 +275,14 @@
                         }
                     }
                 },
-                "lineno": 10,
+                "lineno": 11,
                 "op": {
                     "ast_type": "Add"
                 },
                 "right": {
                     "ast_type": "Num",
                     "col_offset": 12,
-                    "lineno": 10,
+                    "lineno": 11,
                     "n": {
                         "ast_type": "int",
                         "n": 17,
@@ -286,19 +297,19 @@
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 13,
+                    "lineno": 14,
                     "value": {
                         "args": [
                             {
                                 "ast_type": "Str",
                                 "col_offset": 10,
-                                "lineno": 13,
+                                "lineno": 14,
                                 "s": "ola"
                             },
                             {
                                 "ast_type": "Str",
                                 "col_offset": 17,
-                                "lineno": 13,
+                                "lineno": 14,
                                 "s": "ola"
                             }
                         ],
@@ -311,10 +322,10 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 13
+                            "lineno": 14
                         },
                         "keywords": [],
-                        "lineno": 13
+                        "lineno": 14
                     }
                 },
                 {
@@ -323,13 +334,13 @@
                         {
                             "ast_type": "Expr",
                             "col_offset": 8,
-                            "lineno": 15,
+                            "lineno": 16,
                             "value": {
                                 "args": [
                                     {
                                         "ast_type": "Str",
                                         "col_offset": 14,
-                                        "lineno": 15,
+                                        "lineno": 16,
                                         "s": "ola"
                                     }
                                 ],
@@ -342,26 +353,26 @@
                                         "ast_type": "Load"
                                     },
                                     "id": "print",
-                                    "lineno": 15
+                                    "lineno": 16
                                 },
                                 "keywords": [],
-                                "lineno": 15
+                                "lineno": 16
                             }
                         }
                     ],
                     "col_offset": 4,
-                    "lineno": 14,
+                    "lineno": 15,
                     "orelse": [
                         {
                             "ast_type": "Expr",
                             "col_offset": 8,
-                            "lineno": 17,
+                            "lineno": 18,
                             "value": {
                                 "args": [
                                     {
                                         "ast_type": "Str",
                                         "col_offset": 14,
-                                        "lineno": 17,
+                                        "lineno": 18,
                                         "s": "ola"
                                     }
                                 ],
@@ -374,10 +385,10 @@
                                         "ast_type": "Load"
                                     },
                                     "id": "print",
-                                    "lineno": 17
+                                    "lineno": 18
                                 },
                                 "keywords": [],
-                                "lineno": 17
+                                "lineno": 18
                             }
                         }
                     ],
@@ -388,29 +399,29 @@
                             "ast_type": "Load"
                         },
                         "id": "a",
-                        "lineno": 14
+                        "lineno": 15
                     }
                 }
             ],
             "col_offset": 0,
-            "lineno": 12,
+            "lineno": 13,
             "orelse": [
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 19,
+                    "lineno": 20,
                     "value": {
                         "args": [
                             {
                                 "ast_type": "Str",
                                 "col_offset": 10,
-                                "lineno": 19,
+                                "lineno": 20,
                                 "s": "ola"
                             },
                             {
                                 "ast_type": "Str",
                                 "col_offset": 17,
-                                "lineno": 19,
+                                "lineno": 20,
                                 "s": "ola"
                             }
                         ],
@@ -423,17 +434,17 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 19
+                            "lineno": 20
                         },
                         "keywords": [],
-                        "lineno": 19
+                        "lineno": 20
                     }
                 }
             ],
             "test": {
                 "ast_type": "BoolOp",
                 "col_offset": 3,
-                "lineno": 12,
+                "lineno": 13,
                 "op": {
                     "ast_type": "Or"
                 },
@@ -445,7 +456,7 @@
                             "ast_type": "Load"
                         },
                         "id": "a",
-                        "lineno": 12
+                        "lineno": 13
                     },
                     {
                         "ast_type": "Name",
@@ -454,7 +465,7 @@
                             "ast_type": "Load"
                         },
                         "id": "b",
-                        "lineno": 12
+                        "lineno": 13
                     }
                 ]
             }
@@ -462,11 +473,11 @@
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 21,
+            "lineno": 22,
             "value": {
                 "ast_type": "UnaryOp",
                 "col_offset": 0,
-                "lineno": 21,
+                "lineno": 22,
                 "op": {
                     "ast_type": "Not"
                 },
@@ -477,7 +488,7 @@
                         "ast_type": "Load"
                     },
                     "id": "a",
-                    "lineno": 21
+                    "lineno": 22
                 }
             }
         },
@@ -487,13 +498,13 @@
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 24,
+                    "lineno": 25,
                     "value": {
                         "args": [
                             {
                                 "ast_type": "Str",
                                 "col_offset": 10,
-                                "lineno": 24,
+                                "lineno": 25,
                                 "s": "Not a"
                             }
                         ],
@@ -506,20 +517,20 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 24
+                            "lineno": 25
                         },
                         "keywords": [],
-                        "lineno": 24
+                        "lineno": 25
                     }
                 }
             ],
             "col_offset": 0,
-            "lineno": 23,
+            "lineno": 24,
             "orelse": [],
             "test": {
                 "ast_type": "UnaryOp",
                 "col_offset": 3,
-                "lineno": 23,
+                "lineno": 24,
                 "op": {
                     "ast_type": "Not"
                 },
@@ -530,7 +541,7 @@
                         "ast_type": "Load"
                     },
                     "id": "a",
-                    "lineno": 23
+                    "lineno": 24
                 }
             }
         },
@@ -540,13 +551,13 @@
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 27,
+                    "lineno": 28,
                     "value": {
                         "args": [
                             {
                                 "ast_type": "Str",
                                 "col_offset": 10,
-                                "lineno": 27,
+                                "lineno": 28,
                                 "s": "Muahaha"
                             }
                         ],
@@ -559,20 +570,20 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 27
+                            "lineno": 28
                         },
                         "keywords": [],
-                        "lineno": 27
+                        "lineno": 28
                     }
                 }
             ],
             "col_offset": 0,
-            "lineno": 26,
+            "lineno": 27,
             "orelse": [
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 29,
+                    "lineno": 30,
                     "value": {
                         "args": [
                             {
@@ -582,7 +593,7 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "b",
-                                "lineno": 29
+                                "lineno": 30
                             },
                             {
                                 "ast_type": "Name",
@@ -591,7 +602,7 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "c",
-                                "lineno": 29
+                                "lineno": 30
                             },
                             {
                                 "ast_type": "Name",
@@ -600,7 +611,7 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 29
+                                "lineno": 30
                             },
                             {
                                 "ast_type": "Name",
@@ -609,7 +620,7 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 29
+                                "lineno": 30
                             }
                         ],
                         "ast_type": "Call",
@@ -621,10 +632,10 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 29
+                            "lineno": 30
                         },
                         "keywords": [],
-                        "lineno": 29
+                        "lineno": 30
                     }
                 }
             ],
@@ -635,44 +646,12 @@
                     "ast_type": "Load"
                 },
                 "id": "a",
-                "lineno": 26
+                "lineno": 27
             }
         },
         {
             "ast_type": "While",
             "body": [
-                {
-                    "ast_type": "Expr",
-                    "col_offset": 4,
-                    "lineno": 32,
-                    "value": {
-                        "ast_type": "BinOp",
-                        "col_offset": 4,
-                        "left": {
-                            "ast_type": "Name",
-                            "col_offset": 4,
-                            "ctx": {
-                                "ast_type": "Load"
-                            },
-                            "id": "a",
-                            "lineno": 32
-                        },
-                        "lineno": 32,
-                        "op": {
-                            "ast_type": "Mod"
-                        },
-                        "right": {
-                            "ast_type": "Num",
-                            "col_offset": 8,
-                            "lineno": 32,
-                            "n": {
-                                "ast_type": "int",
-                                "n": 2,
-                                "n_str": "2"
-                            }
-                        }
-                    }
-                },
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
@@ -691,12 +670,44 @@
                         },
                         "lineno": 33,
                         "op": {
-                            "ast_type": "Mult"
+                            "ast_type": "Mod"
                         },
                         "right": {
                             "ast_type": "Num",
                             "col_offset": 8,
                             "lineno": 33,
+                            "n": {
+                                "ast_type": "int",
+                                "n": 2,
+                                "n_str": "2"
+                            }
+                        }
+                    }
+                },
+                {
+                    "ast_type": "Expr",
+                    "col_offset": 4,
+                    "lineno": 34,
+                    "value": {
+                        "ast_type": "BinOp",
+                        "col_offset": 4,
+                        "left": {
+                            "ast_type": "Name",
+                            "col_offset": 4,
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "id": "a",
+                            "lineno": 34
+                        },
+                        "lineno": 34,
+                        "op": {
+                            "ast_type": "Mult"
+                        },
+                        "right": {
+                            "ast_type": "Num",
+                            "col_offset": 8,
+                            "lineno": 34,
                             "n": {
                                 "ast_type": "int",
                                 "n": 7231,
@@ -708,7 +719,7 @@
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 34,
+                    "lineno": 35,
                     "value": {
                         "ast_type": "BinOp",
                         "col_offset": 10,
@@ -722,9 +733,9 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 34
+                                "lineno": 35
                             },
-                            "lineno": 34,
+                            "lineno": 35,
                             "op": {
                                 "ast_type": "Mod"
                             },
@@ -735,10 +746,10 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 34
+                                "lineno": 35
                             }
                         },
-                        "lineno": 34,
+                        "lineno": 35,
                         "op": {
                             "ast_type": "Mod"
                         },
@@ -749,26 +760,26 @@
                                 "ast_type": "Load"
                             },
                             "id": "a",
-                            "lineno": 34
+                            "lineno": 35
                         }
                     }
                 },
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 35,
+                    "lineno": 36,
                     "value": {
                         "args": [
                             {
                                 "ast_type": "Str",
                                 "col_offset": 10,
-                                "lineno": 35,
+                                "lineno": 36,
                                 "s": "ola"
                             },
                             {
                                 "ast_type": "Num",
                                 "col_offset": 17,
-                                "lineno": 35,
+                                "lineno": 36,
                                 "n": {
                                     "ast_type": "int",
                                     "n": 1,
@@ -782,12 +793,12 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 35
+                                "lineno": 36
                             },
                             {
                                 "ast_type": "Num",
                                 "col_offset": 23,
-                                "lineno": 35,
+                                "lineno": 36,
                                 "n": {
                                     "ast_type": "int",
                                     "n": 3,
@@ -804,10 +815,10 @@
                                 "ast_type": "Load"
                             },
                             "id": "print",
-                            "lineno": 35
+                            "lineno": 36
                         },
                         "keywords": [],
-                        "lineno": 35
+                        "lineno": 36
                     }
                 },
                 {
@@ -816,13 +827,13 @@
                         {
                             "ast_type": "Expr",
                             "col_offset": 8,
-                            "lineno": 37,
+                            "lineno": 38,
                             "value": {
                                 "args": [
                                     {
                                         "ast_type": "Str",
                                         "col_offset": 14,
-                                        "lineno": 37,
+                                        "lineno": 38,
                                         "s": "ola"
                                     }
                                 ],
@@ -835,15 +846,15 @@
                                         "ast_type": "Load"
                                     },
                                     "id": "print",
-                                    "lineno": 37
+                                    "lineno": 38
                                 },
                                 "keywords": [],
-                                "lineno": 37
+                                "lineno": 38
                             }
                         }
                     ],
                     "col_offset": 4,
-                    "lineno": 36,
+                    "lineno": 37,
                     "orelse": [],
                     "test": {
                         "ast_type": "Name",
@@ -852,17 +863,17 @@
                             "ast_type": "Load"
                         },
                         "id": "a",
-                        "lineno": 36
+                        "lineno": 37
                     }
                 }
             ],
             "col_offset": 0,
-            "lineno": 31,
+            "lineno": 32,
             "orelse": [],
             "test": {
                 "ast_type": "UnaryOp",
                 "col_offset": 6,
-                "lineno": 31,
+                "lineno": 32,
                 "op": {
                     "ast_type": "Not"
                 },
@@ -873,14 +884,14 @@
                         "ast_type": "Load"
                     },
                     "id": "a",
-                    "lineno": 31
+                    "lineno": 32
                 }
             }
         },
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 39,
+            "lineno": 40,
             "value": {
                 "args": [],
                 "ast_type": "Call",
@@ -892,7 +903,7 @@
                     "ctx": {
                         "ast_type": "Load"
                     },
-                    "lineno": 39,
+                    "lineno": 40,
                     "value": {
                         "ast_type": "Attribute",
                         "attr": "b",
@@ -900,7 +911,7 @@
                         "ctx": {
                             "ast_type": "Load"
                         },
-                        "lineno": 39,
+                        "lineno": 40,
                         "value": {
                             "ast_type": "Name",
                             "col_offset": 0,
@@ -908,18 +919,18 @@
                                 "ast_type": "Load"
                             },
                             "id": "a",
-                            "lineno": 39
+                            "lineno": 40
                         }
                     }
                 },
                 "keywords": [],
-                "lineno": 39
+                "lineno": 40
             }
         },
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 40,
+            "lineno": 41,
             "value": {
                 "args": [
                     {
@@ -929,7 +940,7 @@
                             "ast_type": "Load"
                         },
                         "id": "a",
-                        "lineno": 40
+                        "lineno": 41
                     },
                     {
                         "ast_type": "Name",
@@ -938,7 +949,7 @@
                             "ast_type": "Load"
                         },
                         "id": "c",
-                        "lineno": 40
+                        "lineno": 41
                     },
                     {
                         "ast_type": "Name",
@@ -947,7 +958,7 @@
                             "ast_type": "Load"
                         },
                         "id": "d",
-                        "lineno": 40
+                        "lineno": 41
                     }
                 ],
                 "ast_type": "Call",
@@ -959,7 +970,7 @@
                     "ctx": {
                         "ast_type": "Load"
                     },
-                    "lineno": 40,
+                    "lineno": 41,
                     "value": {
                         "ast_type": "Attribute",
                         "attr": "c",
@@ -967,7 +978,7 @@
                         "ctx": {
                             "ast_type": "Load"
                         },
-                        "lineno": 40,
+                        "lineno": 41,
                         "value": {
                             "args": [],
                             "ast_type": "Call",
@@ -979,7 +990,7 @@
                                 "ctx": {
                                     "ast_type": "Load"
                                 },
-                                "lineno": 40,
+                                "lineno": 41,
                                 "value": {
                                     "ast_type": "Name",
                                     "col_offset": 0,
@@ -987,16 +998,16 @@
                                         "ast_type": "Load"
                                     },
                                     "id": "a",
-                                    "lineno": 40
+                                    "lineno": 41
                                 }
                             },
                             "keywords": [],
-                            "lineno": 40
+                            "lineno": 41
                         }
                     }
                 },
                 "keywords": [],
-                "lineno": 40
+                "lineno": 41
             }
         }
     ]
