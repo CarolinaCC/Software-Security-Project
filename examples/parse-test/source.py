@@ -35,3 +35,6 @@ while not a:
     print("ola", 1 ,a ,3)
     if(a):
         print("ola")
+
+a.b.c()
+a.b().c.d(a, c, d)

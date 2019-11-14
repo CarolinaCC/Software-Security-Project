@@ -876,6 +876,128 @@
                     "lineno": 31
                 }
             }
+        },
+        {
+            "ast_type": "Expr",
+            "col_offset": 0,
+            "lineno": 39,
+            "value": {
+                "args": [],
+                "ast_type": "Call",
+                "col_offset": 0,
+                "func": {
+                    "ast_type": "Attribute",
+                    "attr": "c",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 39,
+                    "value": {
+                        "ast_type": "Attribute",
+                        "attr": "b",
+                        "col_offset": 0,
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 39,
+                        "value": {
+                            "ast_type": "Name",
+                            "col_offset": 0,
+                            "ctx": {
+                                "ast_type": "Load"
+                            },
+                            "id": "a",
+                            "lineno": 39
+                        }
+                    }
+                },
+                "keywords": [],
+                "lineno": 39
+            }
+        },
+        {
+            "ast_type": "Expr",
+            "col_offset": 0,
+            "lineno": 40,
+            "value": {
+                "args": [
+                    {
+                        "ast_type": "Name",
+                        "col_offset": 10,
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "id": "a",
+                        "lineno": 40
+                    },
+                    {
+                        "ast_type": "Name",
+                        "col_offset": 13,
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "id": "c",
+                        "lineno": 40
+                    },
+                    {
+                        "ast_type": "Name",
+                        "col_offset": 16,
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "id": "d",
+                        "lineno": 40
+                    }
+                ],
+                "ast_type": "Call",
+                "col_offset": 0,
+                "func": {
+                    "ast_type": "Attribute",
+                    "attr": "d",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "lineno": 40,
+                    "value": {
+                        "ast_type": "Attribute",
+                        "attr": "c",
+                        "col_offset": 0,
+                        "ctx": {
+                            "ast_type": "Load"
+                        },
+                        "lineno": 40,
+                        "value": {
+                            "args": [],
+                            "ast_type": "Call",
+                            "col_offset": 0,
+                            "func": {
+                                "ast_type": "Attribute",
+                                "attr": "b",
+                                "col_offset": 0,
+                                "ctx": {
+                                    "ast_type": "Load"
+                                },
+                                "lineno": 40,
+                                "value": {
+                                    "ast_type": "Name",
+                                    "col_offset": 0,
+                                    "ctx": {
+                                        "ast_type": "Load"
+                                    },
+                                    "id": "a",
+                                    "lineno": 40
+                                }
+                            },
+                            "keywords": [],
+                            "lineno": 40
+                        }
+                    }
+                },
+                "keywords": [],
+                "lineno": 40
+            }
         }
     ]
 }
