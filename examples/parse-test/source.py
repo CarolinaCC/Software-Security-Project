@@ -11,6 +11,10 @@ c = 3 + 4 + 17
 
 if a or b:
     print("ola", "ola")
+    if a:
+        print("ola")
+    else:
+        print("ola")
 else:
     print("ola", "ola")
 
@@ -29,3 +33,5 @@ while not a:
     a * 7231
     a % a % a
     print("ola", 1 ,a ,3)
+    if(a):
+        print("ola")
