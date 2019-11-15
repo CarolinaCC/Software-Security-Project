@@ -17,7 +17,14 @@ An **if and while expression** have the ***sources*** and ***sanitizers*** of it
 
 A **double expression** ***sources*** is the ***union of the sources*** of it's left hand and right hand expressions
 
-A **double expression** ***sanitizers*** is the ***intersection of the sanitizers*** of it's left hand and right hand expressions
+A **double expression** ***sanitizers*** is the ***intersection of the sanitizers*** of it's left hand and right hand expressions according to the following algorithm:
+  * For each sanitizer:
+    * If the sanitizer occurs on both expressions it is kept
+    * If the sanitizer occurs on only one of the expressions:
+      * If the other expression has a source for the vulnerability that is sanitized
+        * The sanitizer is dropped
+      * Else
+        * The sanitizer is kept
 
 When a variable is ***assigned*** it's ***sources*** and ***sanitizers*** are the ***sources*** and ***sanitizers*** of it's right hand expression.
 
