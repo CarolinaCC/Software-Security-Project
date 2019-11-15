@@ -27,6 +27,6 @@ When a function call occurs test:
   * For each ***vulnerability*** the function is a ***sanitizer*** for, see the function ***arguments***:
     * If any of them has a ***source*** of the same vulnerability, the resulting expression will also have that ***sanitizer*** for that ***vulnerability***
   * For each ***vulnerability*** the function is a ***source*** for:
-    * The resulting expression will also have that ***source*** for that ***vulnerability***
-  * For each argument
-    * The resulting expression will also have it's ***sources*** and ***sanitizers*** (implicit information flow)
+    * The resulting ***expression*** will also have that ***source*** for that ***vulnerability***
+  * For each ***argument***
+    * The resulting ***expression*** will also have it's ***sources*** and ***sanitizers*** (implicit information flow)
