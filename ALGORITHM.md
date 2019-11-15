@@ -1,4 +1,4 @@
-## Descrição do algoritmo a fazer
+# Algorithm Description
 
 For each function of the program store:
   * The vulnerabilities for which it is a source  
