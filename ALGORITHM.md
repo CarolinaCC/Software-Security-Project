@@ -9,15 +9,15 @@ For each variable of the program store:
   * Sources of vulnerabilities it has passed through (vulnerability: list(source))
   * Sanitizers it has passed through (vulnerability: list(sanitizers))
 
-A literal has no sources nor sanitizers (empty)
+A **literal** has no ***sources*** nor ***sanitizers*** (empty)
 
-An unary expression keeps the sources and sanitizers of it's right hand expression
+An **unary expression** keeps the ***sources*** and ***sanitizers*** of it's right hand expression
 
-An if and while expression have the sources and sanitizers of it's test expression
+An **if and while expression** have the ***sources*** and ***sanitizers*** of it's test expression
 
-A double expression sources is the union of the sources of it's left hand and right hand expressions
+A **double expression** ***sources*** is the ***union of the sources*** of it's left hand and right hand expressions
 
-A double expression sanitizers is the intersection of the sinks of it's left hand and right hand expressions
+A **double expression** ***sanitizers*** is the ***intersection of the sanitizers*** of it's left hand and right hand expressions
 
 When a variable is assigned it's sources and sanitizers are the sources and sanitizers of it's right hand expression.
 
