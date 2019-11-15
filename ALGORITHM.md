@@ -1,13 +1,13 @@
 # Algorithm Description
 
-For each function of the program store:
-  * The vulnerabilities for which it is a source  
-  * The vulnerabilities for which it is a sink
-  * The vulnerabilities for which it is a sanitizer
+For each ***function*** of the program store:
+  * The ***vulnerabilities*** for which it is a ***source***
+  * The ***vulnerabilities*** for which it is a ***sink***
+  * The ***vulnerabilities*** for which it is a ***sanitizer***
 
-For each variable of the program store:
-  * Sources of vulnerabilities it has passed through (vulnerability: list(source))
-  * Sanitizers it has passed through (vulnerability: list(sanitizers))
+For each ***variable*** of the program store:
+  * ***Sources*** of ***vulnerabilities*** it has passed through (vulnerability: list(source))
+  * ***Sanitizers*** and respective ***vulnerability*** it has passed through (vulnerability: list(sanitizers))
 
 A **literal** has no ***sources*** nor ***sanitizers*** (empty)
 
