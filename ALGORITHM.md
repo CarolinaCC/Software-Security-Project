@@ -1,5 +1,8 @@
 # Algorithm Description
 
+<!-- Nota: Variaveis nao inicializadas tambem sao sources. de todas as vulnerabilidades -->
+<!-- Dizer linhas das vulnerabilidades -->
+<!-- [{"vuln": ..., "source":..., "sanitizer":... },....]--> 
 For each ***function*** of the program store:
   * The ***vulnerabilities*** for which it is a ***source***
   * The ***vulnerabilities*** for which it is a ***sink***
