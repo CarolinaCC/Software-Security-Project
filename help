@@ -1,0 +1,4 @@
+a = input()
+a = clear(a)
+b = input()
+a + b 

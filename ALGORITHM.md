@@ -1,35 +1,28 @@
 # Algorithm Description
 
-<!-- Nota: Variaveis nao inicializadas tambem sao sources. de todas as vulnerabilidades -->
-<!-- Dizer linhas das vulnerabilidades -->
-<!-- [{"vuln": ..., "source":..., "sanitizer":... },....]--> 
+<!-- Nota: Variaveis nao inicializadas tambem sao sources. de todas as vulnerabilidades com a source a ser o nome da vulnerabilidade-->
+<!-- Dizer linhas das vulnerabilidades para bonus -->
 For each ***function*** of the program store:
   * The ***vulnerabilities*** for which it is a ***source***
   * The ***vulnerabilities*** for which it is a ***sink***
   * The ***vulnerabilities*** for which it is a ***sanitizer***
 
 For each ***variable*** of the program store:
-  * ***Sources*** of ***vulnerabilities*** it has passed through (vulnerability: list(source))
+  <!-- [{"vuln": ..., "source":..., "sanitizer":... },....] -->
+  * ***Sources*** of ***vulnerabilities*** it has passed through (format specified in comment)
   * ***Sanitizers*** and respective ***vulnerability*** it has passed through (vulnerability: list(sanitizers))
 
-A **literal** has no ***sources*** nor ***sanitizers*** (empty)
+A **literal** has no vulnerability(empty)
 
-An **unary expression** keeps the ***sources*** and ***sanitizers*** of it's right hand expression
+An **unary expression** keeps the vulnerabilities of it's right hand expression
 
-An **if and while expression** have the ***sources*** and ***sanitizers*** of it's test expression (implicit data flow)
+An **if/while expression** have the vulnerabilities of it's test expression (implicit data flow) (store in stack)
 
-A **double expression** ***sources*** is the ***union of the sources*** of it's left hand and right hand expressions
+A **double expression** vulnerabilities is the concatenation of it's left hand and right hand expressions
 
-A **double expression** ***sanitizers*** is the ***intersection of the sanitizers*** of it's left hand and right hand expressions according to the following algorithm:
-   * For each ***sanitizer***:
-     * If the ***sanitizer*** occurs on ***both expressions*** it is ***kept*** in the resulting expressions
-     * If the ***sanitizer*** occurs on only ***one*** of the expressions:
-       * If the ***other expression*** has a ***source*** for the ***vulnerability*** that is sanitized
-         * The ***sanitizer*** is ***dropped***
-       * Else
-         * The ***sanitizer*** is ***kept***
+When a variable is first seen it has a source of each of the vulnerabilities whose name is the variable name
 
-When a variable is ***assigned*** it's ***sources*** and ***sanitizers*** are the ***sources*** and ***sanitizers*** of it's right hand expression.
+When a variable is ***assigned*** it's ***sources*** and ***sanitizers*** are the ***sources*** and ***sanitizers*** of the right hand expression.
 
 When a function call occurs test:
   * For each ***vulnerability*** the function is a ***sink*** for, see the function ***arguments***:
@@ -39,4 +32,4 @@ When a function call occurs test:
   * For each ***vulnerability*** the function is a ***source*** for:
     * The resulting ***expression*** will also have that ***source*** for that ***vulnerability***
   * For each ***argument***
-    * The resulting ***expression*** will also have it's ***sources*** and ***sanitizers*** (implicit information flow)
+    * The resulting ***expression*** will also have it's vulnerabilities (implicit information flow)
