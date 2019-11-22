@@ -16,7 +16,7 @@ A **literal** has no vulnerability(empty)
 
 An **unary expression** keeps the vulnerabilities of it's right hand expression
 
-An **if/while expression** have the vulnerabilities of it's test expression (implicit data flow) (store in stack)
+An **if/while expression** has the vulnerabilities of it's test expression (implicit data flow) (store in stack)
 
 A **double expression** vulnerabilities is the concatenation of it's left hand and right hand expressions
 
