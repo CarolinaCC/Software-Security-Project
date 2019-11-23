@@ -8,7 +8,7 @@ For each ***function*** of the program store:
   * The ***vulnerabilities*** for which it is a ***sanitizer***
 
 For each ***variable*** of the program store:
-  <!-- {var_name: {"vuln": ..., "source":..., "sanitizer":... },....} -->
+  <!-- [{"vuln": ..., "source":..., "sanitizer":... },....] -->
   * ***Sources*** of ***vulnerabilities*** it has passed through (format specified in comment)
   * ***Sanitizers*** and respective ***vulnerability*** it has passed through (vulnerability: list(sanitizers))
 

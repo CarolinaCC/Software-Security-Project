@@ -253,7 +253,6 @@ def parse(file_path):
     return prog
 
 
-
 if __name__ == "__main__":
     prog = parse(sys.argv[1])
     for statement in prog:
