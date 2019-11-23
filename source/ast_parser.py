@@ -11,6 +11,9 @@ class Statement:
     def parse_from_node(node: dict):
         pass
 
+    def eval(self, variables, patterns):
+        pass
+
 
 class Expression(Statement):
     '''
@@ -23,6 +26,8 @@ class Expression(Statement):
     def parse_from_node(node: dict):
         pass
 
+    def eval(self, variables, patterns):
+        pass
 
 class Identifier(Expression):
     '''
@@ -39,6 +44,17 @@ class Identifier(Expression):
         name = node['id']
         return Identifier(name)
 
+    @staticmethod
+    def new_variable_eval(name, patterns):
+        new_var = []
+        for vuln_name in patterns.keys():
+            new_var.append({"vuln": vuln_name, "source": name, "sanitizer": None})
+        return new_var
+
+    def eval(self, variables, patterns):
+        if not self.name in variables:
+            variables[self.name] = Identifier.new_variable_eval( self.name, patterns)
+        return variables[self.name]
 
 class Literal(Expression):
     '''
@@ -63,6 +79,8 @@ class Literal(Expression):
         #should never happen
         return None
 
+    def eval(self, variables, patterns):
+        return []
 
 class AssignExpression(Statement):
     def __init__(self, left_val: Identifier, right_val: Expression):
@@ -78,6 +96,8 @@ class AssignExpression(Statement):
         right_val = parse_node_expr_value(node['value'])
         return AssignExpression(left_val, right_val)
 
+    def eval(self, variables, patterns):
+        pass
 
 class DoubleExpression(Expression):
     '''
@@ -99,6 +119,10 @@ class DoubleExpression(Expression):
         operator = node["op"]["ast_type"]
         return DoubleExpression(left_val, right_val, operator)
 
+    def eval(self, variables, patterns):
+        pass
+
+
 class BooleanExpression(Expression):
     '''
         A BooleanOperation is an operation of two or more expressions and a boolean operator
@@ -119,6 +143,8 @@ class BooleanExpression(Expression):
         operator = node["op"]["ast_type"]
         return DoubleExpression(left_val, right_val, operator)
 
+    def eval(self, variables, patterns):
+        pass
 
 class UnaryExpression(Expression):
     '''
@@ -137,6 +163,8 @@ class UnaryExpression(Expression):
         right_val = parse_node_expr_value(node["operand"])
         return UnaryExpression(left_operator, right_val)
 
+    def eval(self, variables, patterns):
+        self.right_val.eval(variables, patterns)
 
 class FunctionCall(Expression):
     '''
@@ -151,6 +179,8 @@ class FunctionCall(Expression):
     def parse_from_node(node: dict):
         pass
 
+    def eval(self, variables, patterns):
+        pass
 
 class IfExpression(Statement):
     def __init__(self, cond: Expression, body: list, else_body: list):
@@ -172,6 +202,8 @@ class IfExpression(Statement):
             else_body.append(parse_node(sub_node))
         return IfExpression(cond, body, else_body)
 
+    def eval(self, variables, patterns):
+        pass
 
 
 class WhileExpression(Statement):
@@ -183,7 +215,8 @@ class WhileExpression(Statement):
     def parse_from_node(node: dict):
         pass
 
-
+    def eval(self, variables, patterns):
+        pass
 
 def parse_node_expr_value(node):
     if node['ast_type'] == 'Name':
@@ -216,10 +249,12 @@ def parse(file_path):
         tree = json.load(f)
     for node in tree['body']:
         stmt = parse_node(node)
-        print(stmt)
         prog.append(stmt)
+    return prog
 
 
 
 if __name__ == "__main__":
-    parse(sys.argv[1])
+    prog = parse(sys.argv[1])
+    for statement in prog:
+        print(statement)

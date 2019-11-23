@@ -13,6 +13,9 @@ c = 3
 a = True
 #identifier
 c
+b
+a
+
 
 #double ops
 c = 3 + 4 + 17
