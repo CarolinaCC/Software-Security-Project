@@ -97,7 +97,7 @@ class AssignExpression(Statement):
         return AssignExpression(left_val, right_val)
 
     def eval(self, variables, patterns):
-        pass
+        variables[self.left_val.name] = self.right_val.eval(variables, patterns)
 
 class DoubleExpression(Expression):
     '''
@@ -244,13 +244,13 @@ def parse_node(node):
 
 
 def parse(file_path):
-    prog = list()
+    program = list()
     with open(file_path, 'r') as f:
         tree = json.load(f)
     for node in tree['body']:
         stmt = parse_node(node)
-        prog.append(stmt)
-    return prog
+        program.append(stmt)
+    return program
 
 
 if __name__ == "__main__":
