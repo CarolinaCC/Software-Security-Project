@@ -14,7 +14,6 @@ a = True
 #identifier
 c
 b
-a
 
 
 #double ops

@@ -13,4 +13,4 @@ if __name__ == "__main__":
         if statement != None:
             statement.eval(variables, patterns)
     for variable in variables:
-        print(variables[variable])
+        print(f"variable {variable} : {variables[variable]}")
