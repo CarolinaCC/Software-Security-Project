@@ -199,17 +199,31 @@ class FunctionCall(Expression):
                 vulnerabilities.append(name)
         return vulnerabilities
 
+    def get_sinks(self, patterns):
+        vulnerabilities = list()
+        for name, vulnerability in patterns.items():
+            if self.name in vulnerability.sinks:
+                vulnerabilities.append(name)
+        return vulnerabilities
+
     def eval(self, variables, patterns):
         vulnerabilities = []
         for arg in self.args:
             vulnerabilities += arg.eval(variables, patterns) 
 
         vulnerabilities += self.get_vulnerabilities(patterns)
+
         sanitized_vulnerabilities = self.get_sanitizers(patterns)
         for sanitized_vulnerability in sanitized_vulnerabilities:
             for vulnerability in vulnerabilities:
                 if vulnerability["vuln"] == sanitized_vulnerability:
                     vulnerability["sanitizer"] = self.name
+
+        for sink in self.get_sinks(patterns):
+            for arg in self.args:
+                for vulnerability in arg.eval(variables, patterns):
+                    if vulnerability["vuln"] == sink:
+                        print(vulnerability)
 
         return vulnerabilities
 
