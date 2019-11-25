@@ -192,13 +192,26 @@ class FunctionCall(Expression):
                 vulnerabilities.append({"vuln": name, "source": self.name, "sanitizer": None})
         return vulnerabilities
 
+    def get_sanitizers(self, patterns):
+        vulnerabilities = list()
+        for name, vulnerability in patterns.items():
+            if self.name in vulnerability.sanitizers:
+                vulnerabilities.append(name)
+        return vulnerabilities
+
     def eval(self, variables, patterns):
         vulnerabilities = []
         for arg in self.args:
             vulnerabilities += arg.eval(variables, patterns) 
+
         vulnerabilities += self.get_vulnerabilities(patterns)
+        sanitized_vulnerabilities = self.get_sanitizers(patterns)
+        for sanitized_vulnerability in sanitized_vulnerabilities:
+            for vulnerability in vulnerabilities:
+                if vulnerability["vuln"] == sanitized_vulnerability:
+                    vulnerability["sanitizer"] = self.name
+
         return vulnerabilities
-        
 
 class IfExpression(Statement):
     def __init__(self, cond: Expression, body: list, else_body: list):
