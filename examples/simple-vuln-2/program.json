@@ -92,7 +92,7 @@
                     "ctx": {
                         "ast_type": "Load"
                     },
-                    "id": "Ola",
+                    "id": "get",
                     "lineno": 2
                 },
                 "keywords": [],
