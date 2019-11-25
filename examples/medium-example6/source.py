@@ -4,3 +4,5 @@ while True:
         a = get()
     raw(a)
     a = mogrify(a)
+    while True:
+        raw(a)

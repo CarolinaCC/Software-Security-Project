@@ -9,9 +9,15 @@ def prog_eval(patterns, prog, variables):
     if prog == []:
         return
     elif isinstance(prog[0], ast_parser.IfExpression):
+        #print("if")
         prog_eval(patterns, prog[0].body + prog[1:], copy.deepcopy(variables))
+        #print("else")
         prog_eval(patterns, prog[0].else_body + prog[1:], copy.deepcopy(variables))
-        return
+    elif isinstance(prog[0], ast_parser.WhileExpression):
+        #print("While true")
+        prog_eval(patterns, prog[0].body + prog[0].body + prog[1:], copy.deepcopy(variables))
+        #print("No while")
+        prog_eval(patterns, prog[1:], copy.deepcopy(variables))
     else:
         prog[0].eval(variables, patterns)
         prog_eval(patterns, prog[1:], variables)

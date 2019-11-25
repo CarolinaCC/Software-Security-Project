@@ -49,7 +49,7 @@ class Identifier(Expression):
     def new_variable_eval(name, patterns):
         new_var = []
         for vuln_name in patterns.keys():
-            new_var.append({"vuln": vuln_name, "source": name, "sanitizer": None})
+            new_var.append({"vuln": vuln_name, "source": name, "sanitizer": ""})
         return new_var
 
     def eval(self, variables, patterns):
@@ -190,7 +190,7 @@ class FunctionCall(Expression):
         vulnerabilities = list()
         for name, vulnerability in patterns.items():
             if self.name in vulnerability.sources:
-                vulnerabilities.append({"vuln": name, "source": self.name, "sanitizer": None})
+                vulnerabilities.append({"vuln": name, "source": self.name, "sanitizer": ""})
         return vulnerabilities
 
     def get_sanitizers(self, patterns):

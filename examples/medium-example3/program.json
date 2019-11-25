@@ -39,7 +39,7 @@
                 {
                     "ast_type": "Expr",
                     "col_offset": 4,
-                    "lineno": 4,
+                    "lineno": 3,
                     "value": {
                         "args": [
                             {
@@ -49,42 +49,7 @@
                                     "ast_type": "Load"
                                 },
                                 "id": "a",
-                                "lineno": 4
-                            }
-                        ],
-                        "ast_type": "Call",
-                        "col_offset": 4,
-                        "func": {
-                            "ast_type": "Name",
-                            "col_offset": 4,
-                            "ctx": {
-                                "ast_type": "Load"
-                            },
-                            "id": "execute",
-                            "lineno": 4
-                        },
-                        "keywords": [],
-                        "lineno": 4
-                    }
-                }
-            ],
-            "col_offset": 0,
-            "lineno": 3,
-            "orelse": [
-                {
-                    "ast_type": "Expr",
-                    "col_offset": 4,
-                    "lineno": 6,
-                    "value": {
-                        "args": [
-                            {
-                                "ast_type": "Name",
-                                "col_offset": 12,
-                                "ctx": {
-                                    "ast_type": "Load"
-                                },
-                                "id": "a",
-                                "lineno": 6
+                                "lineno": 3
                             }
                         ],
                         "ast_type": "Call",
@@ -96,13 +61,16 @@
                                 "ast_type": "Load"
                             },
                             "id": "mogrify",
-                            "lineno": 6
+                            "lineno": 3
                         },
                         "keywords": [],
-                        "lineno": 6
+                        "lineno": 3
                     }
                 }
             ],
+            "col_offset": 0,
+            "lineno": 2,
+            "orelse": [],
             "test": {
                 "ast_type": "Name",
                 "col_offset": 3,
@@ -110,13 +78,13 @@
                     "ast_type": "Load"
                 },
                 "id": "a",
-                "lineno": 3
+                "lineno": 2
             }
         },
         {
             "ast_type": "Expr",
             "col_offset": 0,
-            "lineno": 8,
+            "lineno": 5,
             "value": {
                 "args": [
                     {
@@ -126,7 +94,7 @@
                             "ast_type": "Load"
                         },
                         "id": "a",
-                        "lineno": 8
+                        "lineno": 5
                     }
                 ],
                 "ast_type": "Call",
@@ -138,10 +106,10 @@
                         "ast_type": "Load"
                     },
                     "id": "execute",
-                    "lineno": 8
+                    "lineno": 5
                 },
                 "keywords": [],
-                "lineno": 8
+                "lineno": 5
             }
         }
     ]
