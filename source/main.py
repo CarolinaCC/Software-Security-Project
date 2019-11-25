@@ -3,13 +3,18 @@ import sys
 import operator
 import pattern_parser
 import ast_parser
-
+import copy
 
 def prog_eval(patterns, prog, variables):
     if prog == []:
         return
-    prog[0].eval(variables, patterns)
-    prog_eval(patterns, prog[1:], variables)
+    elif isinstance(prog[0], ast_parser.IfExpression):
+        prog_eval(patterns, prog[0].body + prog[1:], copy.deepcopy(variables))
+        prog_eval(patterns, prog[0].else_body + prog[1:], copy.deepcopy(variables))
+        return
+    else:
+        prog[0].eval(variables, patterns)
+        prog_eval(patterns, prog[1:], variables)
 
 if __name__ == "__main__":
     patterns = pattern_parser.parse(sys.argv[1])
