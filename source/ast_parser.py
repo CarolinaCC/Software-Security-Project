@@ -185,8 +185,20 @@ class FunctionCall(Expression):
         args = [parse_node_expr_value(arg) for arg in node["args"]]
         return FunctionCall(name, args)
 
+    def get_vulnerabilities(self, patterns):
+        vulnerabilities = list()
+        for name, vulnerability in patterns.items():
+            if self.name in vulnerability.sources:
+                vulnerabilities.append(name)
+        return vulnerabilities
+
     def eval(self, variables, patterns):
-        pass
+        vulnerabilities = []
+        for arg in self.args:
+            vulnerabilities += arg.eval(variables, patterns) 
+        vulnerabilities += self.get_vulnerabilities(patterns)
+        return vulnerabilities
+        
 
 class IfExpression(Statement):
     def __init__(self, cond: Expression, body: list, else_body: list):
