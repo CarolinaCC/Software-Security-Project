@@ -11,5 +11,5 @@ if __name__ == "__main__":
     variables = {}
     for statement in prog:
         statement.eval(variables, patterns)
-    for variable in variables:
-        print(f"variable {variable} : {variables[variable]}")
+    #for variable in variables:
+        #print(f"variable {variable} : {variables[variable]}")

@@ -224,7 +224,9 @@ class FunctionCall(Expression):
             for arg in self.args:
                 for vulnerability in arg.eval(variables, patterns):
                     if vulnerability["vuln"] == sink:
-                        print(vulnerability)
+                        to_print = copy.deepcopy(vulnerability)
+                        to_print["sink"] = self.name
+                        print(to_print)
 
         return vulnerabilities
 
