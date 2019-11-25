@@ -121,7 +121,7 @@ class DoubleExpression(Expression):
         return DoubleExpression(left_val, right_val, operator)
 
     def eval(self, variables, patterns):
-        pass
+        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
 
 
 class BooleanExpression(Expression):
@@ -165,7 +165,7 @@ class UnaryExpression(Expression):
         return UnaryExpression(left_operator, right_val)
 
     def eval(self, variables, patterns):
-        self.right_val.eval(variables, patterns)
+        return self.right_val.eval(variables, patterns)
 
 class FunctionCall(Expression):
     '''
