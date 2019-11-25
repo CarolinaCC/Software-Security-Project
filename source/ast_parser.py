@@ -98,6 +98,7 @@ class AssignExpression(Statement):
 
     def eval(self, variables, patterns):
         variables[self.left_val.name] = self.right_val.eval(variables, patterns)
+        return variables[self.left_val.name]
 
 class DoubleExpression(Expression):
     '''
@@ -144,7 +145,7 @@ class BooleanExpression(Expression):
         return DoubleExpression(left_val, right_val, operator)
 
     def eval(self, variables, patterns):
-        pass
+        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
 
 class UnaryExpression(Expression):
     '''

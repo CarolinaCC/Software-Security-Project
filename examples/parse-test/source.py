@@ -1,4 +1,6 @@
 #literals and constants
+None
+
 True
 "ola"
 3
@@ -14,7 +16,6 @@ a = True
 #identifier
 c
 b
-
 
 #double ops
 c = 3 + 4 + 17
