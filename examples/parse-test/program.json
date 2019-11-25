@@ -140,6 +140,58 @@
         {
             "ast_type": "Assign",
             "col_offset": 0,
+            "lineno": 10,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "a",
+                    "lineno": 10
+                }
+            ],
+            "value": {
+                "ast_type": "Num",
+                "col_offset": 4,
+                "lineno": 10,
+                "n": {
+                    "ast_type": "int",
+                    "n": 0,
+                    "n_str": "0"
+                }
+            }
+        },
+        {
+            "ast_type": "Assign",
+            "col_offset": 0,
+            "lineno": 11,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "b",
+                    "lineno": 11
+                }
+            ],
+            "value": {
+                "ast_type": "Num",
+                "col_offset": 4,
+                "lineno": 11,
+                "n": {
+                    "ast_type": "int",
+                    "n": 1,
+                    "n_str": "1"
+                }
+            }
+        },
+        {
+            "ast_type": "Assign",
+            "col_offset": 0,
             "lineno": 12,
             "targets": [
                 {
@@ -164,6 +216,42 @@
             }
         },
         {
+            "ast_type": "Assign",
+            "col_offset": 0,
+            "lineno": 13,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "a",
+                    "lineno": 13
+                }
+            ],
+            "value": {
+                "ast_type": "NameConstant",
+                "col_offset": 4,
+                "lineno": 13,
+                "value": "True"
+            }
+        },
+        {
+            "ast_type": "Expr",
+            "col_offset": 0,
+            "lineno": 15,
+            "value": {
+                "ast_type": "Name",
+                "col_offset": 0,
+                "ctx": {
+                    "ast_type": "Load"
+                },
+                "id": "c",
+                "lineno": 15
+            }
+        },
+        {
             "ast_type": "Expr",
             "col_offset": 0,
             "lineno": 16,
@@ -175,6 +263,68 @@
                 },
                 "id": "b",
                 "lineno": 16
+            }
+        },
+        {
+            "ast_type": "Assign",
+            "col_offset": 0,
+            "lineno": 20,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "c",
+                    "lineno": 20
+                }
+            ],
+            "value": {
+                "ast_type": "BinOp",
+                "col_offset": 10,
+                "left": {
+                    "ast_type": "BinOp",
+                    "col_offset": 4,
+                    "left": {
+                        "ast_type": "Num",
+                        "col_offset": 4,
+                        "lineno": 20,
+                        "n": {
+                            "ast_type": "int",
+                            "n": 3,
+                            "n_str": "3"
+                        }
+                    },
+                    "lineno": 20,
+                    "op": {
+                        "ast_type": "Add"
+                    },
+                    "right": {
+                        "ast_type": "Num",
+                        "col_offset": 8,
+                        "lineno": 20,
+                        "n": {
+                            "ast_type": "int",
+                            "n": 4,
+                            "n_str": "4"
+                        }
+                    }
+                },
+                "lineno": 20,
+                "op": {
+                    "ast_type": "Add"
+                },
+                "right": {
+                    "ast_type": "Num",
+                    "col_offset": 12,
+                    "lineno": 20,
+                    "n": {
+                        "ast_type": "int",
+                        "n": 17,
+                        "n_str": "17"
+                    }
+                }
             }
         },
         {

@@ -175,9 +175,14 @@ class FunctionCall(Expression):
         self.name = name
         self.args = args
 
+    def __repr__(self):
+        return f"{self.name}({self.args})"
+
     @staticmethod
     def parse_from_node(node: dict):
-        pass
+        name = node["func"]["attr" if "attr" in node["func"] else "id"]
+        args = [parse_node_expr_value(arg) for arg in node["args"]]
+        return FunctionCall(name, args)
 
     def eval(self, variables, patterns):
         pass
@@ -191,6 +196,7 @@ class IfExpression(Statement):
 
     def __repr__(self):
         return f"If {self.cond} then {self.body} else {self.else_body}"
+
     @staticmethod
     def parse_from_node(node: dict):
         cond = parse_node_expr_value(node["test"])
@@ -211,9 +217,14 @@ class WhileExpression(Statement):
         self.cond = cond
         self.body = body
 
+    def __repr__(self):
+        return f"While {self.cond} do {self.body}"
+
     @staticmethod
     def parse_from_node(node: dict):
-        pass
+        cond = parse_node_expr_value(node["test"])
+        body = [parse_node(n) for n in node["body"]]
+        return WhileExpression(cond, body)
 
     def eval(self, variables, patterns):
         pass
@@ -229,6 +240,8 @@ def parse_node_expr_value(node):
         return DoubleExpression.parse_from_node(node)
     if node['ast_type'] == "BoolOp":
         return BooleanExpression.parse_from_node(node)
+    if node["ast_type"] == "Call":
+        return FunctionCall.parse_from_node(node)
     return None
 
 def parse_node(node):
@@ -240,6 +253,8 @@ def parse_node(node):
         return parse_node_expr_value(node["value"])
     if node['ast_type'] == 'If':
         return IfExpression.parse_from_node(node)
+    if node['ast_type'] == 'While':
+        return WhileExpression.parse_from_node(node)
     return None
 
 
