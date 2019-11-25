@@ -189,7 +189,7 @@ class FunctionCall(Expression):
         vulnerabilities = list()
         for name, vulnerability in patterns.items():
             if self.name in vulnerability.sources:
-                vulnerabilities.append(name)
+                vulnerabilities.append({"vuln": name, "source": self.name, "sanitizer": None})
         return vulnerabilities
 
     def eval(self, variables, patterns):
