@@ -1,8 +1,6 @@
-a = get()
-
-if a:
-    execute(a)
-else:
-    mogrify(a)
-    
-execute(a)
+a = "Hello World"
+while True:
+    if a:
+        a = get()
+    raw(a)
+    a = mogrify(a)
