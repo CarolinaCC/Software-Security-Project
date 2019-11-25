@@ -10,7 +10,6 @@ if __name__ == "__main__":
     prog = ast_parser.parse(sys.argv[2])
     variables = {}
     for statement in prog:
-        if statement != None:
-            statement.eval(variables, patterns)
+        statement.eval(variables, patterns)
     for variable in variables:
         print(f"variable {variable} : {variables[variable]}")
