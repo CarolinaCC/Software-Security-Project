@@ -2,44 +2,16 @@
     "ast_type": "Module",
     "body": [
         {
-            "ast_type": "Assign",
+            "ast_type": "Expr",
             "col_offset": 0,
             "lineno": 1,
-            "targets": [
-                {
-                    "ast_type": "Name",
-                    "col_offset": 0,
-                    "ctx": {
-                        "ast_type": "Store"
-                    },
-                    "id": "uname",
-                    "lineno": 1
-                }
-            ],
             "value": {
-                "args": [
-                    {
-                        "ast_type": "Name",
-                        "col_offset": 23,
-                        "ctx": {
-                            "ast_type": "Load"
-                        },
-                        "id": "request",
-                        "lineno": 1
-                    }
-                ],
-                "ast_type": "Call",
-                "col_offset": 8,
-                "func": {
-                    "ast_type": "Name",
-                    "col_offset": 8,
-                    "ctx": {
-                        "ast_type": "Load"
-                    },
-                    "id": "retrieve_uname",
-                    "lineno": 1
+                "ast_type": "Name",
+                "col_offset": 0,
+                "ctx": {
+                    "ast_type": "Load"
                 },
-                "keywords": [],
+                "id": "request",
                 "lineno": 1
             }
         },
@@ -54,33 +26,65 @@
                     "ctx": {
                         "ast_type": "Store"
                     },
-                    "id": "q",
+                    "id": "uname",
                     "lineno": 2
+                }
+            ],
+            "value": {
+                "args": [],
+                "ast_type": "Call",
+                "col_offset": 8,
+                "func": {
+                    "ast_type": "Name",
+                    "col_offset": 8,
+                    "ctx": {
+                        "ast_type": "Load"
+                    },
+                    "id": "get_query_string",
+                    "lineno": 2
+                },
+                "keywords": [],
+                "lineno": 2
+            }
+        },
+        {
+            "ast_type": "Assign",
+            "col_offset": 0,
+            "lineno": 3,
+            "targets": [
+                {
+                    "ast_type": "Name",
+                    "col_offset": 0,
+                    "ctx": {
+                        "ast_type": "Store"
+                    },
+                    "id": "q",
+                    "lineno": 3
                 }
             ],
             "value": {
                 "args": [
                     {
                         "ast_type": "BinOp",
-                        "col_offset": 8,
+                        "col_offset": 12,
                         "left": {
                             "ast_type": "Str",
-                            "col_offset": 8,
-                            "lineno": 2,
+                            "col_offset": 12,
+                            "lineno": 3,
                             "s": "SELECT pass FROM users WHERE user='%s'"
                         },
-                        "lineno": 2,
+                        "lineno": 3,
                         "op": {
                             "ast_type": "Mod"
                         },
                         "right": {
                             "ast_type": "Name",
-                            "col_offset": 51,
+                            "col_offset": 55,
                             "ctx": {
                                 "ast_type": "Load"
                             },
                             "id": "uname",
-                            "lineno": 2
+                            "lineno": 3
                         }
                     }
                 ],
@@ -92,11 +96,11 @@
                     "ctx": {
                         "ast_type": "Load"
                     },
-                    "id": "get",
-                    "lineno": 2
+                    "id": "mogrify",
+                    "lineno": 3
                 },
                 "keywords": [],
-                "lineno": 2
+                "lineno": 3
             }
         }
     ]

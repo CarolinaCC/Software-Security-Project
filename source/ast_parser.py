@@ -2,6 +2,7 @@
 
 import json
 import sys
+import copy
 
 class Statement:
     '''
@@ -54,7 +55,7 @@ class Identifier(Expression):
     def eval(self, variables, patterns):
         if not self.name in variables:
             variables[self.name] = Identifier.new_variable_eval( self.name, patterns)
-        return variables[self.name]
+        return copy.deepcopy(variables[self.name])
 
 class Literal(Expression):
     '''
@@ -98,7 +99,7 @@ class AssignExpression(Statement):
 
     def eval(self, variables, patterns):
         variables[self.left_val.name] = self.right_val.eval(variables, patterns)
-        return variables[self.left_val.name]
+        return copy.deepcopy(variables[self.left_val.name])
 
 class DoubleExpression(Expression):
     '''
@@ -209,7 +210,7 @@ class FunctionCall(Expression):
     def eval(self, variables, patterns):
         vulnerabilities = []
         for arg in self.args:
-            vulnerabilities += arg.eval(variables, patterns) 
+            vulnerabilities += arg.eval(variables, patterns)
 
         vulnerabilities += self.get_vulnerabilities(patterns)
 
