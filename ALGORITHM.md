@@ -1,5 +1,6 @@
 # Algorithm Description
 
+<!-- None ver tambem que nao tem source nem sink -->
 <!-- Nota: Variaveis nao inicializadas tambem sao sources. de todas as vulnerabilidades com a source a ser o nome da vulnerabilidade-->
 <!-- Dizer linhas das vulnerabilidades para bonus -->
 For each ***function*** of the program store:
