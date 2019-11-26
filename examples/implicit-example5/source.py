@@ -1,12 +1,17 @@
-a = "Hello World"
-while True:
-    execute(a)
-    if true:
-        a = escape_string(a)
-    raw(a)
-    if true:
-        a = mogrify(a)
-    if true:
-        a = a + get() + get_object_or_404() + ContactMailForm()
+a = get()
+b = "Ola"
+while a:
+    if a:
+        if a:
+            if a:
+                b = "Ola"
+            else:
+                b = "Ola2"
+        else:
+            b = "Ola3"
     else:
-        a = a + get_query_string() + copy() 
+        b = "Ola4"
+if a:
+    b = "Ola5"
+else:
+    execute(b)
