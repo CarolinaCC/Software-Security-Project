@@ -4,6 +4,10 @@ import json
 import sys
 import copy
 
+
+
+found_vulnerabilities = []
+
 class Statement:
     '''
         Statement := Expression | If | If Else | While | Identifier = Expression
@@ -265,8 +269,7 @@ class FunctionCall(Expression):
                     if vulnerability["vuln"] == sink:
                         to_print = copy.deepcopy(vulnerability)
                         to_print["sink"] = self.name
-                        print(to_print)
-
+                        found_vulnerabilities.append(to_print)
         return vulnerabilities
 
 class IfExpression(Statement):

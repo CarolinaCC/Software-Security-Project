@@ -26,6 +26,8 @@ if __name__ == "__main__":
     prog = ast_parser.parse(sys.argv[2])
     variables = {}
     prog_eval(patterns, prog, variables)
+    for vuln in set(ast_parser.found_vulnerabilities):
+        print(vuln)
     #for statement in prog:
     #    statement.eval(variables, patterns)
     #for variable in variables:
