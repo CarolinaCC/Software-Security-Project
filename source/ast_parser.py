@@ -44,7 +44,7 @@ class Identifier(Expression):
     @staticmethod
     def parse_from_node(node: dict):
         name = node['id']
-        return Identifier(name)
+        return Identifier(name, node["lineno"])
 
     @staticmethod
     def new_variable_eval(name, patterns):
@@ -74,11 +74,11 @@ class Literal(Expression):
     def parse_from_node(node: dict):
         ast_type = node['ast_type']
         if ast_type == 'Str':
-            return Literal(node['s'])
+            return Literal(node['s'], node["lineno"])
         if ast_type == 'Num':
-            return Literal(node['n']['n'])
+            return Literal(node['n']['n'], node["lineno"])
         if ast_type == 'NameConstant':
-            return Literal(node["value"])
+            return Literal(node["value"], node["lineno"])
         #should never happen
         return None
 
@@ -98,7 +98,7 @@ class AssignExpression(Statement):
     def parse_from_node(node: dict):
         left_val = parse_node_expr_value(node['targets'][0])
         right_val = parse_node_expr_value(node['value'])
-        return AssignExpression(left_val, right_val)
+        return AssignExpression(left_val, right_val, node["lineno"])
 
     def eval(self, variables, patterns):
         variables[self.left_val.name] = self.right_val.eval(variables, patterns)
@@ -123,7 +123,7 @@ class DoubleExpression(Expression):
         left_val = parse_node_expr_value(node["left"])
         right_val = parse_node_expr_value(node["right"])
         operator = node["op"]["ast_type"]
-        return DoubleExpression(left_val, right_val, operator)
+        return DoubleExpression(left_val, right_val, operator, node["lineno"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -143,9 +143,9 @@ class AttributeExpression(Expression):
 
     @staticmethod
     def parse_from_node(node: dict):
-        left_val = Identifier(node["attr"])
+        left_val = Identifier(node["attr"], node["lineno"])
         right_val = parse_node_expr_value(node["value"])
-        return AttributeExpression(left_val, right_val)
+        return AttributeExpression(left_val, right_val, node["lineno"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -170,7 +170,7 @@ class BooleanExpression(Expression):
         left_val = parse_node_expr_value(node["values"][0])
         right_val = parse_node_expr_value(node["values"][1])
         operator = node["op"]["ast_type"]
-        return DoubleExpression(left_val, right_val, operator)
+        return DoubleExpression(left_val, right_val, operator, node["lineno"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -191,7 +191,7 @@ class UnaryExpression(Expression):
     def parse_from_node(node: dict):
         left_operator = node["op"]["ast_type"]
         right_val = parse_node_expr_value(node["operand"])
-        return UnaryExpression(left_operator, right_val)
+        return UnaryExpression(left_operator, right_val, node["lineno"])
 
     def eval(self, variables, patterns):
         return self.right_val.eval(variables, patterns)
@@ -213,7 +213,7 @@ class FunctionCall(Expression):
     def parse_from_node(node: dict):
         name = node["func"]["attr" if "attr" in node["func"] else "id"]
         args = [parse_node_expr_value(arg) for arg in node["args"]]
-        return FunctionCall(name, args)
+        return FunctionCall(name, args, node["lineno"])
 
     def get_vulnerabilities(self, patterns):
         vulnerabilities = list()
@@ -279,7 +279,7 @@ class IfExpression(Statement):
         else_body = []
         for sub_node in node["orelse"]:
             else_body.append(parse_node(sub_node))
-        return IfExpression(cond, body, else_body)
+        return IfExpression(cond, body, else_body, node["lineno"])
 
     def eval(self, variables, patterns):
         pass
@@ -298,7 +298,7 @@ class WhileExpression(Statement):
     def parse_from_node(node: dict):
         cond = parse_node_expr_value(node["test"])
         body = [parse_node(n) for n in node["body"]]
-        return WhileExpression(cond, body)
+        return WhileExpression(cond, body, node["lineno"])
 
     def eval(self, variables, patterns):
         pass
@@ -348,3 +348,4 @@ if __name__ == "__main__":
     prog = parse(sys.argv[1])
     for statement in prog:
         print(statement)
+        print(statement.lineno)
