@@ -8,6 +8,7 @@ import copy
 def get_stack_vulnerabilities(stack: list) -> list:
     vulns = []
     for entry in stack:
+
         vulns += entry
     return vulns
 
@@ -70,7 +71,8 @@ class Identifier(Expression):
         new_var = []
         for vuln_name in patterns.keys():
             new_var.append({"vuln": vuln_name, "source": name, "source_lineno": lineno, \
-            "source_col_offset": col_offset, "sanitizer": "", "sanitizer_lineno":0, "sanitizer_col_offset" : 0})
+            "source_col_offset": col_offset, "source_type" : "Explicit",
+             "sanitizer": "", "sanitizer_lineno":0, "sanitizer_col_offset" : 0})
         return new_var
 
     def eval(self, variables, patterns, stack):
@@ -245,6 +247,7 @@ class FunctionCall(Expression):
             if self.name in vulnerability.sources:
                 vulnerabilities.append({"vuln": name, "source": self.name, \
                 "source_lineno": self.lineno, "source_col_offset": self.col_offset,
+                "source_type" : "Explicit",
                 "sanitizer" : "", "sanitizer_lineno" : 0, "sanitizer_col_offset" : 0})
         return vulnerabilities
 
@@ -313,7 +316,7 @@ class IfExpression(Statement):
 
     def eval(self, variables, patterns, stack):
         return self.cond.eval(variables, patterns, stack)
-        
+
 
 
 class WhileExpression(Statement):
