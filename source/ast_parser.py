@@ -34,9 +34,10 @@ class Identifier(Expression):
     '''
         An Identifier is a program variable id
     '''
-    def __init__(self, name: str, lineno: int):
+    def __init__(self, name: str, lineno: int, col_offset: int):
         self.name = name
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.name}"
@@ -44,18 +45,18 @@ class Identifier(Expression):
     @staticmethod
     def parse_from_node(node: dict):
         name = node['id']
-        return Identifier(name, node["lineno"])
+        return Identifier(name, node["lineno"], node["col_offset"])
 
     @staticmethod
-    def new_variable_eval(name, patterns):
+    def new_variable_eval(name, lineno, patterns):
         new_var = []
         for vuln_name in patterns.keys():
-            new_var.append({"vuln": vuln_name, "source": name, "sanitizer": None})
+            new_var.append({"vuln": vuln_name, "source_lineno": lineno, "source": name, "sanitizer": "", "sanitizer_lineno":0})
         return new_var
 
     def eval(self, variables, patterns):
         if not self.name in variables:
-            variables[self.name] = Identifier.new_variable_eval( self.name, patterns)
+            variables[self.name] = Identifier.new_variable_eval( self.name, self.lineno, patterns)
         return copy.deepcopy(variables[self.name])
 
 class Literal(Expression):
@@ -63,9 +64,10 @@ class Literal(Expression):
         A literal is a constant value (like 3 or "Hello world")
         Literal := Num | Str
     '''
-    def __init__(self, val, lineno: int):
+    def __init__(self, val, lineno: int, col_offset: int):
         self.val = val
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.val}"
@@ -74,11 +76,11 @@ class Literal(Expression):
     def parse_from_node(node: dict):
         ast_type = node['ast_type']
         if ast_type == 'Str':
-            return Literal(node['s'], node["lineno"])
+            return Literal(node['s'], node["lineno"], node["col_offset"])
         if ast_type == 'Num':
-            return Literal(node['n']['n'], node["lineno"])
+            return Literal(node['n']['n'], node["lineno"], node["col_offset"])
         if ast_type == 'NameConstant':
-            return Literal(node["value"], node["lineno"])
+            return Literal(node["value"], node["lineno"], node["col_offset"])
         #should never happen
         return None
 
@@ -86,10 +88,11 @@ class Literal(Expression):
         return []
 
 class AssignExpression(Statement):
-    def __init__(self, left_val: Identifier, right_val: Expression, lineno: int):
+    def __init__(self, left_val: Identifier, right_val: Expression, lineno: int, col_offset: int):
         self.left_val = left_val
         self.right_val = right_val
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.left_val} := {self.right_val}"
@@ -98,7 +101,7 @@ class AssignExpression(Statement):
     def parse_from_node(node: dict):
         left_val = parse_node_expr_value(node['targets'][0])
         right_val = parse_node_expr_value(node['value'])
-        return AssignExpression(left_val, right_val, node["lineno"])
+        return AssignExpression(left_val, right_val, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         variables[self.left_val.name] = self.right_val.eval(variables, patterns)
@@ -108,12 +111,12 @@ class DoubleExpression(Expression):
     '''
         A DoubleExpression is an operation of two or more expressions
     '''
-    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int):
+    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int, col_offset: int):
         self.left_val = left_val
         self.right_val = right_val
         self.operator = operator
         self.lineno = lineno
-
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.left_val} {self.operator} {self.right_val}"
@@ -123,7 +126,7 @@ class DoubleExpression(Expression):
         left_val = parse_node_expr_value(node["left"])
         right_val = parse_node_expr_value(node["right"])
         operator = node["op"]["ast_type"]
-        return DoubleExpression(left_val, right_val, operator, node["lineno"])
+        return DoubleExpression(left_val, right_val, operator, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -132,20 +135,20 @@ class AttributeExpression(Expression):
     '''
         A AttributeExpression 
     '''
-    def __init__(self, left_val: Expression, right_val: Expression, lineno: int):
+    def __init__(self, left_val: Expression, right_val: Expression, lineno: int, col_offset: int):
         self.left_val = left_val
         self.right_val = right_val
         self.lineno = lineno
-
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.right_val}.{self.left_val}"
 
     @staticmethod
     def parse_from_node(node: dict):
-        left_val = Identifier(node["attr"], node["lineno"])
+        left_val = Identifier(node["attr"], node["lineno"], node["col_offset"])
         right_val = parse_node_expr_value(node["value"])
-        return AttributeExpression(left_val, right_val, node["lineno"])
+        return AttributeExpression(left_val, right_val, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -155,12 +158,12 @@ class BooleanExpression(Expression):
     '''
         A BooleanOperation is an operation of two or more expressions and a boolean operator
     '''
-    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int):
+    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int, col_offset: int):
         self.left_val = left_val
         self.right_val = right_val
         self.operator = operator
         self.lineno = lineno
-
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.left_val} {self.operator} {self.right_val}"
@@ -170,7 +173,7 @@ class BooleanExpression(Expression):
         left_val = parse_node_expr_value(node["values"][0])
         right_val = parse_node_expr_value(node["values"][1])
         operator = node["op"]["ast_type"]
-        return DoubleExpression(left_val, right_val, operator, node["lineno"])
+        return DoubleExpression(left_val, right_val, operator, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
@@ -179,10 +182,11 @@ class UnaryExpression(Expression):
     '''
         UnaryExpression := not Expression
     '''
-    def __init__(self, left_operator: str, right_val: Expression, lineno: int):
+    def __init__(self, left_operator: str, right_val: Expression, lineno: int, col_offset: int):
         self.left_operator = left_operator
         self.right_val = right_val
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.left_operator} {self.right_val}"
@@ -191,7 +195,7 @@ class UnaryExpression(Expression):
     def parse_from_node(node: dict):
         left_operator = node["op"]["ast_type"]
         right_val = parse_node_expr_value(node["operand"])
-        return UnaryExpression(left_operator, right_val, node["lineno"])
+        return UnaryExpression(left_operator, right_val, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         return self.right_val.eval(variables, patterns)
@@ -201,10 +205,11 @@ class FunctionCall(Expression):
     FunctionCall:= name(Args)
     Args := Args , Expression | Expression | Empty
     '''
-    def __init__(self, name: str, args: list, lineno: int): #args list of expressions
+    def __init__(self, name: str, args: list, lineno: int, col_offset: int): #args list of expressions
         self.name = name
         self.lineno = lineno
         self.args = args
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"{self.name}({self.args})"
@@ -213,7 +218,7 @@ class FunctionCall(Expression):
     def parse_from_node(node: dict):
         name = node["func"]["attr" if "attr" in node["func"] else "id"]
         args = [parse_node_expr_value(arg) for arg in node["args"]]
-        return FunctionCall(name, args, node["lineno"])
+        return FunctionCall(name, args, node["lineno"], node["col_offset"])
 
     def get_vulnerabilities(self, patterns):
         vulnerabilities = list()
@@ -260,12 +265,13 @@ class FunctionCall(Expression):
         return vulnerabilities
 
 class IfExpression(Statement):
-    def __init__(self, cond: Expression, body: list, else_body: list, lineno: int):
+    def __init__(self, cond: Expression, body: list, else_body: list, lineno: int, col_offset: int):
         #body, else_body list of statements
         self.cond = cond
         self.body = body
         self.else_body = else_body #if no else else_body should be Empty List
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"If {self.cond} then {self.body} else {self.else_body}"
@@ -279,17 +285,18 @@ class IfExpression(Statement):
         else_body = []
         for sub_node in node["orelse"]:
             else_body.append(parse_node(sub_node))
-        return IfExpression(cond, body, else_body, node["lineno"])
+        return IfExpression(cond, body, else_body, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         pass
 
 
 class WhileExpression(Statement):
-    def __init__(self, cond: Expression, body: list, lineno: int): #body: list of statements
+    def __init__(self, cond: Expression, body: list, lineno: int, col_offset: int): #body: list of statements
         self.cond = cond
         self.body = body
         self.lineno = lineno
+        self.col_offset = col_offset
 
     def __repr__(self):
         return f"While {self.cond} do {self.body}"
@@ -298,7 +305,7 @@ class WhileExpression(Statement):
     def parse_from_node(node: dict):
         cond = parse_node_expr_value(node["test"])
         body = [parse_node(n) for n in node["body"]]
-        return WhileExpression(cond, body, node["lineno"])
+        return WhileExpression(cond, body, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns):
         pass
@@ -348,4 +355,4 @@ if __name__ == "__main__":
     prog = parse(sys.argv[1])
     for statement in prog:
         print(statement)
-        print(statement.lineno)
+        print(f"{statement.lineno} {statement.col_offset}")
