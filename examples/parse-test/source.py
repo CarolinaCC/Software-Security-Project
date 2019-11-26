@@ -10,6 +10,13 @@ True
 4 + 7
 4 + 7 + 12
 
+a < b
+a > b
+
+if a < b:
+    print(a)
+else:
+    print(b)
 #assignments
 a = 0
 b = 1
