@@ -4,11 +4,13 @@ import json
 import sys
 import copy
 
+def execute_operator(a, b, operator):
+    pass
+
 
 def get_stack_vulnerabilities(stack: list) -> list:
     vulns = []
     for entry in stack:
-
         vulns += entry
     return vulns
 
@@ -22,6 +24,7 @@ def push_stack(stack: list, insert: list) -> list:
 
 found_vulnerabilities = []
 
+
 class Statement:
     '''
         Statement := Expression | If | If Else | While | Identifier = Expression
@@ -31,6 +34,9 @@ class Statement:
         pass
 
     def eval(self, variables, patterns, stack):
+        pass
+
+    def get_val(self, memory: dict)
         pass
 
 class Expression(Statement):
@@ -47,6 +53,9 @@ class Expression(Statement):
     def eval(self, variables, patterns, stack):
         pass
 
+    def get_val(self, memory: dict)
+        pass
+
 class EndCond(Expression):
 
     def __init__(self):
@@ -54,6 +63,9 @@ class EndCond(Expression):
 
     def eval(self, variables, patterns, stack):
         stack.pop()
+
+    def get_val(self, memory: dict)
+        return None
 
 class Identifier(Expression):
     '''
@@ -86,6 +98,11 @@ class Identifier(Expression):
             variables[self.name] = Identifier.new_variable_eval(self.name, self.lineno, self.col_offset, patterns)
         return copy.deepcopy(variables[self.name])
 
+    def get_val(self, memory: dict)
+        if self.name not in memory:
+            return None
+        return memory[self.name]
+
 class Literal(Expression):
     '''
         A literal is a constant value (like 3 or "Hello world")
@@ -114,6 +131,9 @@ class Literal(Expression):
     def eval(self, variables, patterns, stack):
         return []
 
+    def get_val(self, memory: dict)
+        return self.val
+
 class AssignExpression(Statement):
     def __init__(self, left_val: Identifier, right_val: Expression, lineno: int, col_offset: int):
         self.left_val = left_val
@@ -133,6 +153,10 @@ class AssignExpression(Statement):
     def eval(self, variables, patterns, stack):
         variables[self.left_val.name] = self.right_val.eval(variables, patterns, stack) + get_stack_vulnerabilities(stack)
         return copy.deepcopy(variables[self.left_val.name])
+
+    def get_val(self, memory: dict)
+        memory[self.name] = self.right_val.get_val(memory)
+        return memory[self.name]
 
 class DoubleExpression(Expression):
     '''
@@ -158,6 +182,9 @@ class DoubleExpression(Expression):
     def eval(self, variables, patterns, stack):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
+    def get_val(self, memory: dict)
+        return None
+
 class AttributeExpression(Expression):
     '''
         A AttributeExpression
@@ -180,6 +207,35 @@ class AttributeExpression(Expression):
     def eval(self, variables, patterns, stack):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
+    def get_val(self, memory: dict)
+        return None
+
+class CompareExpression(Expression):
+    '''
+        A CompareOperation is an 
+    '''
+    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int, col_offset: int):
+        self.left_val = left_val
+        self.right_val = right_val
+        self.operator = operator
+        self.lineno = lineno
+        self.col_offset = col_offset
+
+    def __repr__(self):
+        return f"{self.left_val} {self.operator} {self.right_val}"
+
+    @staticmethod
+    def parse_from_node(node: dict):
+        right_val = parse_node_expr_value(node["comparators"][0])
+        left_val = parse_node_expr_value(node["left"])
+        operator = node["ops"]["ast_type"]
+        return CompareExpression(left_val, right_val, operator, node["lineno"], node["col_offset"])
+
+    def eval(self, variables, patterns, stack):
+        return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
+
+    def get_val(self, memory: dict)
+        return None  
 
 class BooleanExpression(Expression):
     '''
@@ -205,6 +261,9 @@ class BooleanExpression(Expression):
     def eval(self, variables, patterns, stack):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
+    def get_val(self, memory: dict)
+        return None
+
 class UnaryExpression(Expression):
     '''
         UnaryExpression := not Expression
@@ -226,6 +285,9 @@ class UnaryExpression(Expression):
 
     def eval(self, variables, patterns, stack):
         return self.right_val.eval(variables, patterns, stack)
+
+    def get_val(self, memory: dict)
+        return None
 
 class FunctionCall(Expression):
     '''
@@ -297,6 +359,9 @@ class FunctionCall(Expression):
                         found_vulnerabilities.append(to_print)
         return vulnerabilities
 
+    def get_val(self, memory: dict)
+        return None
+
 class IfExpression(Statement):
     def __init__(self, cond: Expression, body: list, else_body: list, lineno: int, col_offset: int):
         #body, else_body list of statements
@@ -323,7 +388,8 @@ class IfExpression(Statement):
     def eval(self, variables, patterns, stack):
         return self.cond.eval(variables, patterns, stack)
 
-
+    def get_val(self, memory: dict)
+        return None
 
 class WhileExpression(Statement):
     def __init__(self, cond: Expression, body: list, lineno: int, col_offset: int): #body: list of statements
@@ -344,7 +410,12 @@ class WhileExpression(Statement):
     def eval(self, variables, patterns, stack):
         return self.cond.eval(variables, patterns, stack)
 
+    def get_val(self, memory: dict)
+        return None        
+
 def parse_node_expr_value(node):
+    if node['ast_type'] == 'Compare':
+        return CompareExpression.parse_from_node(node)
     if node['ast_type'] == 'Name':
         return Identifier.parse_from_node(node)
     if node['ast_type'] in ('Str', 'Num', 'NameConstant'):
