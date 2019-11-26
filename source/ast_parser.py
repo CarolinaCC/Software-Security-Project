@@ -34,8 +34,9 @@ class Identifier(Expression):
     '''
         An Identifier is a program variable id
     '''
-    def __init__(self, name: str):
+    def __init__(self, name: str, lineno: int):
         self.name = name
+        self.lineno = lineno
 
     def __repr__(self):
         return f"{self.name}"
@@ -62,8 +63,9 @@ class Literal(Expression):
         A literal is a constant value (like 3 or "Hello world")
         Literal := Num | Str
     '''
-    def __init__(self, val):
+    def __init__(self, val, lineno: int):
         self.val = val
+        self.lineno = lineno
 
     def __repr__(self):
         return f"{self.val}"
@@ -84,9 +86,10 @@ class Literal(Expression):
         return []
 
 class AssignExpression(Statement):
-    def __init__(self, left_val: Identifier, right_val: Expression):
+    def __init__(self, left_val: Identifier, right_val: Expression, lineno: int):
         self.left_val = left_val
         self.right_val = right_val
+        self.lineno = lineno
 
     def __repr__(self):
         return f"{self.left_val} := {self.right_val}"
@@ -105,10 +108,11 @@ class DoubleExpression(Expression):
     '''
         A DoubleExpression is an operation of two or more expressions
     '''
-    def __init__(self, left_val: Expression, right_val: Expression, operator: str):
+    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int):
         self.left_val = left_val
         self.right_val = right_val
         self.operator = operator
+        self.lineno = lineno
 
 
     def __repr__(self):
@@ -128,9 +132,10 @@ class AttributeExpression(Expression):
     '''
         A AttributeExpression 
     '''
-    def __init__(self, left_val: Expression, right_val: Expression):
+    def __init__(self, left_val: Expression, right_val: Expression, lineno: int):
         self.left_val = left_val
         self.right_val = right_val
+        self.lineno = lineno
 
 
     def __repr__(self):
@@ -150,10 +155,11 @@ class BooleanExpression(Expression):
     '''
         A BooleanOperation is an operation of two or more expressions and a boolean operator
     '''
-    def __init__(self, left_val: Expression, right_val: Expression, operator: str):
+    def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int):
         self.left_val = left_val
         self.right_val = right_val
         self.operator = operator
+        self.lineno = lineno
 
 
     def __repr__(self):
@@ -173,9 +179,10 @@ class UnaryExpression(Expression):
     '''
         UnaryExpression := not Expression
     '''
-    def __init__(self, left_operator: str, right_val: Expression):
+    def __init__(self, left_operator: str, right_val: Expression, lineno: int):
         self.left_operator = left_operator
         self.right_val = right_val
+        self.lineno = lineno
 
     def __repr__(self):
         return f"{self.left_operator} {self.right_val}"
@@ -194,8 +201,9 @@ class FunctionCall(Expression):
     FunctionCall:= name(Args)
     Args := Args , Expression | Expression | Empty
     '''
-    def __init__(self, name: str, args: list): #args list of expressions
+    def __init__(self, name: str, args: list, lineno: int): #args list of expressions
         self.name = name
+        self.lineno = lineno
         self.args = args
 
     def __repr__(self):
@@ -252,11 +260,12 @@ class FunctionCall(Expression):
         return vulnerabilities
 
 class IfExpression(Statement):
-    def __init__(self, cond: Expression, body: list, else_body: list):
+    def __init__(self, cond: Expression, body: list, else_body: list, lineno: int):
         #body, else_body list of statements
         self.cond = cond
         self.body = body
         self.else_body = else_body #if no else else_body should be Empty List
+        self.lineno = lineno
 
     def __repr__(self):
         return f"If {self.cond} then {self.body} else {self.else_body}"
@@ -277,9 +286,10 @@ class IfExpression(Statement):
 
 
 class WhileExpression(Statement):
-    def __init__(self, cond: Expression, body: list): #body: list of statements
+    def __init__(self, cond: Expression, body: list, lineno: int): #body: list of statements
         self.cond = cond
         self.body = body
+        self.lineno = lineno
 
     def __repr__(self):
         return f"While {self.cond} do {self.body}"
