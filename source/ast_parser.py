@@ -16,7 +16,7 @@ class Statement:
     def parse_from_node(node: dict):
         pass
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         pass
 
 
@@ -31,7 +31,7 @@ class Expression(Statement):
     def parse_from_node(node: dict):
         pass
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         pass
 
 class Identifier(Expression):
@@ -59,7 +59,7 @@ class Identifier(Expression):
             "source_col_offset": col_offset, "sanitizer": "", "sanitizer_lineno":0, "sanitizer_col_offset" : 0})
         return new_var
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         if not self.name in variables:
             variables[self.name] = Identifier.new_variable_eval(self.name, self.lineno, self.col_offset, patterns)
         return copy.deepcopy(variables[self.name])
@@ -89,7 +89,7 @@ class Literal(Expression):
         #should never happen
         return None
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         return []
 
 class AssignExpression(Statement):
@@ -108,8 +108,8 @@ class AssignExpression(Statement):
         right_val = parse_node_expr_value(node['value'])
         return AssignExpression(left_val, right_val, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
-        variables[self.left_val.name] = self.right_val.eval(variables, patterns)
+    def eval(self, variables, patterns, stack):
+        variables[self.left_val.name] = self.right_val.eval(variables, patterns, stack)
         return copy.deepcopy(variables[self.left_val.name])
 
 class DoubleExpression(Expression):
@@ -133,8 +133,8 @@ class DoubleExpression(Expression):
         operator = node["op"]["ast_type"]
         return DoubleExpression(left_val, right_val, operator, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
-        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
+    def eval(self, variables, patterns, stack):
+        return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
 class AttributeExpression(Expression):
     '''
@@ -155,8 +155,8 @@ class AttributeExpression(Expression):
         right_val = parse_node_expr_value(node["value"])
         return AttributeExpression(left_val, right_val, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
-        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
+    def eval(self, variables, patterns, stack):
+        return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
 
 class BooleanExpression(Expression):
@@ -180,8 +180,8 @@ class BooleanExpression(Expression):
         operator = node["op"]["ast_type"]
         return DoubleExpression(left_val, right_val, operator, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
-        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
+    def eval(self, variables, patterns, stack):
+        return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
 class UnaryExpression(Expression):
     '''
@@ -202,8 +202,8 @@ class UnaryExpression(Expression):
         right_val = parse_node_expr_value(node["operand"])
         return UnaryExpression(left_operator, right_val, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
-        return self.right_val.eval(variables, patterns)
+    def eval(self, variables, patterns, stack):
+        return self.right_val.eval(variables, patterns, stack)
 
 class FunctionCall(Expression):
     '''
@@ -248,10 +248,10 @@ class FunctionCall(Expression):
                 vulnerabilities.append(name)
         return vulnerabilities
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         vulnerabilities = []
         for arg in self.args:
-            vulnerabilities += arg.eval(variables, patterns)
+            vulnerabilities += arg.eval(variables, patterns, stack)
 
         vulnerabilities += self.get_vulnerabilities(patterns)
 
@@ -265,7 +265,7 @@ class FunctionCall(Expression):
 
         for sink in self.get_sinks(patterns):
             for arg in self.args:
-                for vulnerability in arg.eval(variables, patterns):
+                for vulnerability in arg.eval(variables, patterns, stack):
                     if vulnerability["vuln"] == sink:
                         to_print = copy.deepcopy(vulnerability)
                         to_print["sink"] = self.name
@@ -297,7 +297,7 @@ class IfExpression(Statement):
             else_body.append(parse_node(sub_node))
         return IfExpression(cond, body, else_body, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         pass
 
 
@@ -317,7 +317,7 @@ class WhileExpression(Statement):
         body = [parse_node(n) for n in node["body"]]
         return WhileExpression(cond, body, node["lineno"], node["col_offset"])
 
-    def eval(self, variables, patterns):
+    def eval(self, variables, patterns, stack):
         pass
 
 def parse_node_expr_value(node):
