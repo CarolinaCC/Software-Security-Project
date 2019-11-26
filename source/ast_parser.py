@@ -12,6 +12,7 @@ def get_stack_vulnerabilities(stack: list) -> list:
     return vulns
 
 
+
 found_vulnerabilities = []
 
 class Statement:
@@ -24,7 +25,6 @@ class Statement:
 
     def eval(self, variables, patterns, stack):
         pass
-
 
 class Expression(Statement):
     '''
@@ -39,6 +39,14 @@ class Expression(Statement):
 
     def eval(self, variables, patterns, stack):
         pass
+
+class EndCond(Expression):
+
+    def __init__(self):
+        pass
+
+    def eval(self, variables, patterns, stack):
+        stack.pop()
 
 class Identifier(Expression):
     '''
@@ -304,7 +312,8 @@ class IfExpression(Statement):
         return IfExpression(cond, body, else_body, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns, stack):
-        pass
+        return self.cond.eval(variables, patterns, stack)
+        
 
 
 class WhileExpression(Statement):
@@ -324,7 +333,7 @@ class WhileExpression(Statement):
         return WhileExpression(cond, body, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns, stack):
-        pass
+        return self.cond.eval(variables, patterns, stack)
 
 def parse_node_expr_value(node):
     if node['ast_type'] == 'Name':

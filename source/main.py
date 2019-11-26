@@ -10,12 +10,14 @@ def prog_eval(patterns, prog, variables, stack):
     if prog == []:
         return
     if isinstance(prog[0], ast_parser.IfExpression):
-        prog_eval(patterns, prog[0].body + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
-        prog_eval(patterns, prog[0].else_body + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
+    	stack.append(prog[0].eval(variables, patterns, stack))
+        prog_eval(patterns, prog[0].body + [EndCond()] + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
+        prog_eval(patterns, prog[0].else_body + [EndCond()] + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
 
     if isinstance(prog[0], ast_parser.WhileExpression):
     	# while body will run twice
-        prog_eval(patterns, 3 * prog[0].body + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
+    	stack.append(prog[0].eval(variables, patterns, stack))
+        prog_eval(patterns, 3 * prog[0].body + [EndCond()] +prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
         prog_eval(patterns, prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
     else:
         prog[0].eval(variables, patterns, stack)
