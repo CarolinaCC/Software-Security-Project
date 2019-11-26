@@ -13,6 +13,12 @@ def get_stack_vulnerabilities(stack: list) -> list:
     return vulns
 
 
+def push_stack(stack: list, insert: list) -> list:
+    for entry in insert:
+        entry["source_type"] = "Implicit"
+
+    stack.append(insert)
+
 
 found_vulnerabilities = []
 

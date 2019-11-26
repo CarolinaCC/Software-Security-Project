@@ -9,16 +9,16 @@ import copy
 def prog_eval(patterns, prog, variables, stack):
     if prog == []:
         return
-    if isinstance(prog[0], ast_parser.IfExpression):
-        stack.append(prog[0].eval(variables, patterns, stack))
+    elif isinstance(prog[0], ast_parser.IfExpression):
+        push_stack(stack, prog[0].eval(variables, patterns, stack))
         prog_eval(patterns, prog[0].body + [ast_parser.EndCond()] + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
         prog_eval(patterns, prog[0].else_body + [ast_parser.EndCond()] + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
 
-    if isinstance(prog[0], ast_parser.WhileExpression):
+    elif isinstance(prog[0], ast_parser.WhileExpression):
     	# while body will run twice
-        stack.append(prog[0].eval(variables, patterns, stack))
+        push_stack(stack, prog[0].eval(variables, patterns, stack))
         prog_eval(patterns, 3 * prog[0].body + [ast_parser.EndCond()] +prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
-        prog_eval(patterns, prog[1:], copy.deepcopy(variables), copy.deepcopy(stack))
+        prog_eval(patterns, prog[1:], copy.deepcopy(variables), copyy.deepcopy(stack))
     else:
         prog[0].eval(variables, patterns, stack)
         prog_eval(patterns, prog[1:], variables, stack)
