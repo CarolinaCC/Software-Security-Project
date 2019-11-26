@@ -124,6 +124,27 @@ class DoubleExpression(Expression):
     def eval(self, variables, patterns):
         return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
 
+class AttributeExpression(Expression):
+    '''
+        A AttributeExpression 
+    '''
+    def __init__(self, left_val: Expression, right_val: Expression):
+        self.left_val = left_val
+        self.right_val = right_val
+
+
+    def __repr__(self):
+        return f"{self.right_val}.{self.left_val}"
+
+    @staticmethod
+    def parse_from_node(node: dict):
+        left_val = Identifier(node["attr"])
+        right_val = parse_node_expr_value(node["value"])
+        return AttributeExpression(left_val, right_val)
+
+    def eval(self, variables, patterns):
+        return self.left_val.eval(variables, patterns) + self.right_val.eval(variables, patterns)
+
 
 class BooleanExpression(Expression):
     '''
@@ -285,6 +306,8 @@ def parse_node_expr_value(node):
         return BooleanExpression.parse_from_node(node)
     if node["ast_type"] == "Call":
         return FunctionCall.parse_from_node(node)
+    if node["ast_type"] == "Attribute":
+        return AttributeExpression.parse_from_node(node)
     return None
 
 def parse_node(node):

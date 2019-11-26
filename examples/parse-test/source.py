@@ -1,6 +1,8 @@
 #literals and constants
 None
 
+a.b.c
+
 True
 "ola"
 3
