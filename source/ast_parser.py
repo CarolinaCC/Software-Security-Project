@@ -269,6 +269,8 @@ class FunctionCall(Expression):
                     if vulnerability["vuln"] == sink:
                         to_print = copy.deepcopy(vulnerability)
                         to_print["sink"] = self.name
+                        to_print["sink_lineno"] = self.lineno
+                        to_print["sink_col_offset"] = self.col_offset
                         found_vulnerabilities.append(to_print)
         return vulnerabilities
 
