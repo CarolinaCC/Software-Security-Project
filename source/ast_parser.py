@@ -3,10 +3,11 @@
 import json
 import sys
 import copy
+import operator
 
-def execute_operator(a, b, operator):
-    pass
-
+def execute_operator(a, b, op):
+    method = getattr(op, op.lower())
+    return method(a,b)
 
 def get_stack_vulnerabilities(stack: list) -> list:
     vulns = []
@@ -183,7 +184,7 @@ class DoubleExpression(Expression):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        return execute_operator(self.left_val.get_val(), self.right_val.get_val(), self.operator)
 
 class AttributeExpression(Expression):
     '''
