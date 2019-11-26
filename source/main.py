@@ -31,13 +31,17 @@ if __name__ == "__main__":
     stack = []
     prog_eval(patterns, prog, variables, stack)
     unique_list = []
+    to_file = []
     for vuln in ast_parser.found_vulnerabilities:
         if vuln not in unique_list:
             unique_list.append(vuln)
-    for vuln in unique_list:
-        print(vuln)
 
-    #for statement in prog:
-    #    statement.eval(variables, patterns)
-    #for variable in variables:
-        #print(f"variable {variable} : {variables[variable]}")
+            to_file.append({"vulnerability": vuln["vuln"], "source": vuln["source"], "sink": vuln["sink"], "sanitizer": vuln["sanitizer"]})
+
+    with open(sys.argv[2][:-4] + "output.json", "w") as f:
+        if len(sys.argv) == 3:
+            f.write(str(to_file))
+        elif len(sys.argv) == 4 and sys.argv[3] == "debug":
+            f.write(str(unique_list))
+        #for vuln in unique_list:
+        #    f.write(str(vuln))
