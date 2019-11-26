@@ -5,6 +5,12 @@ import sys
 import copy
 
 
+def get_stack_vulnerabilities(stack: list) -> list:
+    vulns = []
+    for entry in stack:
+        vulns += entry
+    return vulns
+
 
 found_vulnerabilities = []
 
@@ -109,7 +115,7 @@ class AssignExpression(Statement):
         return AssignExpression(left_val, right_val, node["lineno"], node["col_offset"])
 
     def eval(self, variables, patterns, stack):
-        variables[self.left_val.name] = self.right_val.eval(variables, patterns, stack)
+        variables[self.left_val.name] = self.right_val.eval(variables, patterns, stack) + get_stack_vulnerabilities(stack)
         return copy.deepcopy(variables[self.left_val.name])
 
 class DoubleExpression(Expression):
