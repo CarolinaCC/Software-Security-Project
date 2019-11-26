@@ -48,15 +48,16 @@ class Identifier(Expression):
         return Identifier(name, node["lineno"], node["col_offset"])
 
     @staticmethod
-    def new_variable_eval(name, lineno, patterns):
+    def new_variable_eval(name, lineno, col_offset, patterns):
         new_var = []
         for vuln_name in patterns.keys():
-            new_var.append({"vuln": vuln_name, "source_lineno": lineno, "source": name, "sanitizer": "", "sanitizer_lineno":0})
+            new_var.append({"vuln": vuln_name, "source": name, "source_lineno": lineno, \
+            "source_col_offset": col_offset, "sanitizer": "", "sanitizer_lineno":0, "sanitizer_col_offset" : 0})
         return new_var
 
     def eval(self, variables, patterns):
         if not self.name in variables:
-            variables[self.name] = Identifier.new_variable_eval( self.name, self.lineno, patterns)
+            variables[self.name] = Identifier.new_variable_eval(self.name, self.lineno, self.col_offset, patterns)
         return copy.deepcopy(variables[self.name])
 
 class Literal(Expression):
@@ -133,7 +134,7 @@ class DoubleExpression(Expression):
 
 class AttributeExpression(Expression):
     '''
-        A AttributeExpression 
+        A AttributeExpression
     '''
     def __init__(self, left_val: Expression, right_val: Expression, lineno: int, col_offset: int):
         self.left_val = left_val
@@ -224,7 +225,9 @@ class FunctionCall(Expression):
         vulnerabilities = list()
         for name, vulnerability in patterns.items():
             if self.name in vulnerability.sources:
-                vulnerabilities.append({"vuln": name, "source": self.name, "sanitizer": None})
+                vulnerabilities.append({"vuln": name, "source": self.name, \
+                "source_lineno": self.lineno, "source_col_offset": self.col_offset,
+                "sanitizer" : "", "sanitizer_lineno" : 0, "sanitizer_col_offset" : 0})
         return vulnerabilities
 
     def get_sanitizers(self, patterns):
@@ -253,6 +256,8 @@ class FunctionCall(Expression):
             for vulnerability in vulnerabilities:
                 if vulnerability["vuln"] == sanitized_vulnerability:
                     vulnerability["sanitizer"] = self.name
+                    vulnerability["sanitizer_lineno"] = self.lineno
+                    vulnerability["sanitizer_col_offset"] = self.col_offset
 
         for sink in self.get_sinks(patterns):
             for arg in self.args:
@@ -355,4 +360,3 @@ if __name__ == "__main__":
     prog = parse(sys.argv[1])
     for statement in prog:
         print(statement)
-        print(f"{statement.lineno} {statement.col_offset}")
