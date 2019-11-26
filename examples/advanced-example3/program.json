@@ -43,13 +43,10 @@
                     "value": {
                         "args": [
                             {
-                                "ast_type": "Name",
-                                "col_offset": 12,
-                                "ctx": {
-                                    "ast_type": "Load"
-                                },
-                                "id": "a",
-                                "lineno": 4
+                                "ast_type": "Str",
+                                "col_offset": 10,
+                                "lineno": 4,
+                                "s": "ola"
                             }
                         ],
                         "ast_type": "Call",
@@ -60,7 +57,7 @@
                             "ctx": {
                                 "ast_type": "Load"
                             },
-                            "id": "execute",
+                            "id": "print",
                             "lineno": 4
                         },
                         "keywords": [],
@@ -72,41 +69,27 @@
             "lineno": 3,
             "orelse": [
                 {
-                    "ast_type": "Assign",
+                    "ast_type": "Expr",
                     "col_offset": 4,
                     "lineno": 6,
-                    "targets": [
-                        {
-                            "ast_type": "Name",
-                            "col_offset": 4,
-                            "ctx": {
-                                "ast_type": "Store"
-                            },
-                            "id": "a",
-                            "lineno": 6
-                        }
-                    ],
                     "value": {
                         "args": [
                             {
-                                "ast_type": "Name",
-                                "col_offset": 16,
-                                "ctx": {
-                                    "ast_type": "Load"
-                                },
-                                "id": "a",
-                                "lineno": 6
+                                "ast_type": "Str",
+                                "col_offset": 10,
+                                "lineno": 6,
+                                "s": "ola"
                             }
                         ],
                         "ast_type": "Call",
-                        "col_offset": 8,
+                        "col_offset": 4,
                         "func": {
                             "ast_type": "Name",
-                            "col_offset": 8,
+                            "col_offset": 4,
                             "ctx": {
                                 "ast_type": "Load"
                             },
-                            "id": "mogrify",
+                            "id": "print",
                             "lineno": 6
                         },
                         "keywords": [],

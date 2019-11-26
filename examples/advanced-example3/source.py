@@ -1,8 +1,8 @@
 a = get()
 
 if a:
-    execute(a)
+    print("ola")
 else:
-    a = mogrify(a)
-
+    print("ola")
+    
 execute(a)
