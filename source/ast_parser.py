@@ -352,9 +352,10 @@ class FunctionCall(Expression):
         for sanitized_vulnerability in sanitized_vulnerabilities:
             for vulnerability in vulnerabilities:
                 if vulnerability["vuln"] == sanitized_vulnerability:
-                    vulnerability["sanitizer"] = self.name
-                    vulnerability["sanitizer_lineno"] = self.lineno
-                    vulnerability["sanitizer_col_offset"] = self.col_offset
+                    if vulnerability["source_type"] == "Explicit":
+                        vulnerability["sanitizer"] = self.name
+                        vulnerability["sanitizer_lineno"] = self.lineno
+                        vulnerability["sanitizer_col_offset"] = self.col_offset
 
         for sink in self.get_sinks(patterns):
             for arg in self.args:
