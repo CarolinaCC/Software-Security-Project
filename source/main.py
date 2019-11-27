@@ -1,15 +1,15 @@
 import json
 import sys
-import operator
+import copy
 import pattern_parser
 import ast_parser
-import copy
+
 
 
 def prog_eval(patterns, prog, variables, stack, use_val, memory):
     if prog == []:
         return
-    elif isinstance(prog[0], ast_parser.IfExpression):
+    if isinstance(prog[0], ast_parser.IfExpression):
         cond_val = None
         if use_val:
             cond_val = prog[0].get_val(memory)
