@@ -61,10 +61,8 @@ if __name__ == "__main__":
             to_file.append({"vulnerability": vuln["vuln"], "source": vuln["source"], "sink": vuln["sink"], "sanitizer": vuln["sanitizer"]})
             if print_flag:
                 print(vuln)
-    with open(sys.argv[2][:-4] + "output.json", "w") as f:
+    with open(sys.argv[1][:-4] + "output.json", "w") as f:
         if "debug" not in sys.argv[3:]:
-            f.write(str(to_file))
+            json.dump(to_file, f)
         else:
-            f.write(str(unique_list))
-        #for vuln in unique_list:
-        #    f.write(str(vuln))
+            json.dump(unique_list, f)
