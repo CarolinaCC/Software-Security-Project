@@ -192,7 +192,7 @@ class DoubleExpression(Expression):
 
 class AttributeExpression(Expression):
     '''
-        A AttributeExpression
+        An AttributeExpression is of type a.x for example
     '''
     def __init__(self, left_val: Expression, right_val: Expression, lineno: int, col_offset: int):
         self.left_val = left_val

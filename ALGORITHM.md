@@ -1,15 +1,11 @@
 # Algorithm Description
 
-<!-- None ver tambem que nao tem source nem sink -->
-<!-- Nota: Variaveis nao inicializadas tambem sao sources. de todas as vulnerabilidades com a source a ser o nome da vulnerabilidade-->
-<!-- Dizer linhas das vulnerabilidades para bonus -->
 For each ***function*** of the program store:
   * The ***vulnerabilities*** for which it is a ***source***
   * The ***vulnerabilities*** for which it is a ***sink***
   * The ***vulnerabilities*** for which it is a ***sanitizer***
 
 For each ***variable*** of the program store:
-  <!-- [{"vuln": ..., "source":..., "source_lineno": ... "sanitizer":..., "sanitizer_lineno": ...},....] -->
   * ***Sources*** of ***vulnerabilities*** it has passed through (format specified in comment)
   * ***Sanitizers*** and respective ***vulnerability*** it has passed through (vulnerability: list(sanitizers))
 
