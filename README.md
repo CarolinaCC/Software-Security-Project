@@ -24,8 +24,11 @@ python source/main.py program.json patterns.json
 The result will be stored in a file called ```program.output.json```
 
 Optional parameters (after both files have been specified):
+
 ```print``` to print the result to the command line as well as to the output file
+
 ```advanced``` the program will try to understand the values of conditions and use it to avoid false positives
+
 ```debug``` the prints exta information, like if the information flow is implicit or explicit, and the line and collumns where the source, sink and sanitization happens
 
 ## Group 3
