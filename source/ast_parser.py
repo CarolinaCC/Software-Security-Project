@@ -5,9 +5,12 @@ import sys
 import copy
 import operator
 
+found_vulnerabilities = []
+
 def execute_operator(a, b, op):
     if a == None or b == None:
         return None
+    #Ast is weird with multiplication
     if op == "Mult":
         op = "mul"
     method = getattr(operator,  "__" + op.lower() + "__")
@@ -25,9 +28,6 @@ def push_stack(stack: list, insert: list) -> list:
         entry["source_type"] = "Implicit"
 
     stack.append(insert)
-
-
-found_vulnerabilities = []
 
 
 class Statement:
@@ -352,6 +352,7 @@ class FunctionCall(Expression):
         for sanitized_vulnerability in sanitized_vulnerabilities:
             for vulnerability in vulnerabilities:
                 if vulnerability["vuln"] == sanitized_vulnerability:
+                    #can only sanitize explicit vulnerabilities
                     if vulnerability["source_type"] == "Explicit":
                         vulnerability["sanitizer"] = self.name
                         vulnerability["sanitizer_lineno"] = self.lineno
@@ -469,4 +470,4 @@ if __name__ == "__main__":
     mem = {}
     prog = parse(sys.argv[1])
     for statement in prog:
-        print(f"{statement} = {statement.get_val(mem)}")
+        print(f"{statement}")
