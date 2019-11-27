@@ -1,0 +1,20 @@
+#!/bin/sh
+
+group='03';
+number=0;
+
+[ -d prepared ] && rm -rf prepared;
+mkdir prepared;
+./run;
+
+for dir in $(ls examples)
+do
+    new_dir="T$group-$(printf '%02d' $number)";
+    mkdir prepared/$new_dir;
+    number=$((number+1));
+
+    cp examples/$dir/source.py prepared/$new_dir/program.py;
+    cp examples/$dir/program.output.json prepared/$new_dir/output.json;
+    cp examples/$dir/program.json prepared/$new_dir/input.json;
+    cp examples/$dir/patterns.json prepared/$new_dir/patterns.json;
+done

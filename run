@@ -3,5 +3,5 @@
 for dir in $(ls examples)
 do
     astexport -i examples/$dir/source.py -p > examples/$dir/program.json
-    python3 source/main.py examples/$dir/patterns.json examples/$dir/program.json $1 $2 $3
+    python3 source/main.py examples/$dir/program.json examples/$dir/patterns.json $1 $2 $3
 done

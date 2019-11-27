@@ -1,0 +1,1 @@
+[{'vuln': 'SQL injection', 'source': 'get', 'source_lineno': 1, 'source_col_offset': 4, 'source_type': 'Implicit', 'sanitizer': '', 'sanitizer_lineno': 0, 'sanitizer_col_offset': 0, 'sink': 'execute', 'sink_lineno': 17, 'sink_col_offset': 4}]
