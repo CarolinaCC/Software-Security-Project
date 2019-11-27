@@ -31,7 +31,11 @@ c = 3 + 4 + 17
 #unary ops
 not True
 not a
-
+c = c % 3
+c = c ** 3
+c = c / 3
+c = c * 3
+b = False
 #boolean ops
 a and b
 a and True

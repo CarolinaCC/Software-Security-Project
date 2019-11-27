@@ -6,7 +6,11 @@ import copy
 import operator
 
 def execute_operator(a, b, op):
-    method = getattr(op, op.lower())
+    if a == None or b == None:
+        return None
+    if op == "Mult":
+        op = "mul"
+    method = getattr(operator,  "__" + op.lower() + "__")
     return method(a,b)
 
 def get_stack_vulnerabilities(stack: list) -> list:
@@ -125,7 +129,7 @@ class Literal(Expression):
         if ast_type == 'Num':
             return Literal(node['n']['n'], node["lineno"], node["col_offset"])
         if ast_type == 'NameConstant':
-            return Literal(node["value"], node["lineno"], node["col_offset"])
+            return Literal(eval(node["value"]), node["lineno"], node["col_offset"])
         #should never happen
         return None
 
@@ -184,7 +188,7 @@ class DoubleExpression(Expression):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return execute_operator(self.left_val.get_val(), self.right_val.get_val(), self.operator)
+        return execute_operator(self.left_val.get_val(memory), self.right_val.get_val(memory), self.operator)
 
 class AttributeExpression(Expression):
     '''
@@ -236,7 +240,7 @@ class CompareExpression(Expression):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        return execute_operator(self.left_val.get_val(memory), self.right_val.get_val(memory), self.operator)
 
 class BooleanExpression(Expression):
     '''
@@ -263,7 +267,7 @@ class BooleanExpression(Expression):
         return self.left_val.eval(variables, patterns, stack) + self.right_val.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        return execute_operator(self.left_val.get_val(memory), self.right_val.get_val(memory), self.operator)
 
 class UnaryExpression(Expression):
     '''
@@ -288,7 +292,10 @@ class UnaryExpression(Expression):
         return self.right_val.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        val = self.right_val.get_val(memory)
+        if (val == None):
+            return None
+        return operator.__not__(val)
 
 class FunctionCall(Expression):
     '''
@@ -390,7 +397,7 @@ class IfExpression(Statement):
         return self.cond.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        return self.cond.get_val(memory)
 
 class WhileExpression(Statement):
     def __init__(self, cond: Expression, body: list, lineno: int, col_offset: int): #body: list of statements
@@ -412,7 +419,7 @@ class WhileExpression(Statement):
         return self.cond.eval(variables, patterns, stack)
 
     def get_val(self, memory: dict):
-        return None
+        return self.cond.get_val(memory)
 
 def parse_node_expr_value(node):
     if node['ast_type'] == 'Compare':
@@ -458,6 +465,7 @@ def parse(file_path):
 
 
 if __name__ == "__main__":
+    mem = {}
     prog = parse(sys.argv[1])
     for statement in prog:
-        print(statement)
+        print(f"{statement} = {statement.get_val(mem)}")
