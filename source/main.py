@@ -50,8 +50,8 @@ def prog_eval(patterns, prog, variables, stack, use_val, memory):
         prog_eval(patterns, prog[1:], variables, stack, use_val, memory)
 
 if __name__ == "__main__":
-    patterns = pattern_parser.parse(sys.argv[1])
-    prog = ast_parser.parse(sys.argv[2])
+    patterns = pattern_parser.parse(sys.argv[2])
+    prog = ast_parser.parse(sys.argv[1])
     variables = {}
     stack = []
     use_val = False
