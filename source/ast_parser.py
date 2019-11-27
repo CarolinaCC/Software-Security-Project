@@ -217,7 +217,7 @@ class AttributeExpression(Expression):
 
 class CompareExpression(Expression):
     '''
-        A CompareOperation is an
+        A CompareOperation is an operation of tipe <, <=, ...
     '''
     def __init__(self, left_val: Expression, right_val: Expression, operator: str, lineno: int, col_offset: int):
         self.left_val = left_val

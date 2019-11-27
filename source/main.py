@@ -79,7 +79,7 @@ if __name__ == "__main__":
             to_file.append({"vulnerability": vuln["vuln"], "source": vuln["source"], "sink": vuln["sink"], "sanitizer": vuln["sanitizer"]})
             if print_flag:
                 print(vuln)
-    
+
     with open(sys.argv[1][:-4] + "output.json", "w") as f:
         if "debug" not in sys.argv[3:]:
             json.dump(to_file, f)
