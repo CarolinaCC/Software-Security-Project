@@ -112,7 +112,7 @@
                                                 "ast_type": "Str",
                                                 "col_offset": 20,
                                                 "lineno": 9,
-                                                "s": "Ola"
+                                                "s": "Ola2"
                                             }
                                         }
                                     ],
@@ -149,7 +149,7 @@
                                         "ast_type": "Str",
                                         "col_offset": 16,
                                         "lineno": 11,
-                                        "s": "Ola"
+                                        "s": "Ola3"
                                     }
                                 }
                             ],
@@ -186,7 +186,7 @@
                                 "ast_type": "Str",
                                 "col_offset": 12,
                                 "lineno": 13,
-                                "s": "ola"
+                                "s": "Ola4"
                             }
                         }
                     ],
@@ -236,7 +236,7 @@
                         "ast_type": "Str",
                         "col_offset": 8,
                         "lineno": 15,
-                        "s": "Ola"
+                        "s": "Ola5"
                     }
                 }
             ],
