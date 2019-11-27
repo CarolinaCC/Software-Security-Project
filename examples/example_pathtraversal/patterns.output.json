@@ -1,1 +1,0 @@
-[{'vulnerability': 'Path Traversal', 'source': 'get', 'sink': 'send_file', 'sanitizer': ''}]
