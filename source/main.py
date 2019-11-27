@@ -26,22 +26,11 @@ def prog_eval(patterns, prog, variables, stack, use_val, memory):
             prog_eval(patterns, prog[0].else_body + [ast_parser.EndCond()] + prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
 
     elif isinstance(prog[0], ast_parser.WhileExpression):
-        # while body running trice catches all possible vulnerabilities
-        cond_val = None
-        if use_val:
-            cond_val = prog[0].get_val(memory)
-        if cond_val == None:
-            #condition value is not known
-            prog_eval(patterns, prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
-            ast_parser.push_stack(stack, prog[0].eval(variables, patterns, stack))
-            prog_eval(patterns, 3 * prog[0].body + [ast_parser.EndCond()] +prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
-        elif cond_val == True:
-            #condition is true, only while body executes
-            ast_parser.push_stack(stack, prog[0].eval(variables, patterns, stack))
-            prog_eval(patterns, 3 * prog[0].body + [ast_parser.EndCond()] +prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
-        else:
-            #condition is false, only rest of program executes
-            prog_eval(patterns, prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
+        #assume while is false
+        prog_eval(patterns, prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
+        #assume while is true (execute 3 times for all possible vulnerabilities that might be encoded)
+        ast_parser.push_stack(stack, prog[0].eval(variables, patterns, stack))
+        prog_eval(patterns, 3 * prog[0].body + [ast_parser.EndCond()] +prog[1:], copy.deepcopy(variables), copy.deepcopy(stack), use_val, memory)
 
     else:
         if use_val:
