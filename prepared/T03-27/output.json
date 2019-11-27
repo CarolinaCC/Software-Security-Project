@@ -1,1 +1,0 @@
-[{'vulnerability': 'SQL injection', 'source': 'get', 'sink': 'raw', 'sanitizer': ''}]
