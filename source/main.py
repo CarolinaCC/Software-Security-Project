@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     unique_list = []
     to_file = []
-    
+
     print_flag = False
     if "print" in sys.argv[3:]:
         print_flag = True
